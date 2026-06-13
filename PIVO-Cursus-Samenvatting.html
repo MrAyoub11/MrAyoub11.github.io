@@ -260,6 +260,71 @@
   .abc-tag.c { background: var(--green); }
   .abc-tag.d { background: var(--orange); }
 
+  /* MOBILE RESPONSIVE */
+  #menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px; left: 12px;
+    z-index: 200;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    width: 42px; height: 42px;
+    font-size: 1.3rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  #sidebar-overlay { display: none; }
+
+  @media (max-width: 900px) {
+    body { display: block; }
+    #menu-toggle { display: block; }
+    #sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 300;
+      width: 80%;
+      max-width: 300px;
+    }
+    #sidebar.open { transform: translateX(0); }
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 250;
+    }
+    #sidebar-overlay.open { display: block; }
+    #main { margin-left: 0; }
+    #top-bar {
+      padding: 14px 16px 14px 64px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #top-bar h2 { font-size: 1rem; }
+    #top-bar a { margin-left: 0 !important; order: 3; width: 100%; justify-content: center; }
+    .content { padding: 16px; }
+    .chapter-header { padding: 16px 16px 12px; flex-wrap: wrap; }
+    .chapter-body { padding: 16px; }
+    .card-grid { grid-template-columns: 1fr; gap: 12px; }
+    .card { padding: 14px; }
+    .protocol-body { padding: 12px 14px; }
+    .so-header { padding: 12px 14px; flex-wrap: wrap; }
+    .so-body { padding: 14px; }
+    .steps-inline { gap: 6px; }
+    .step { font-size: 0.74rem; padding: 5px 10px; }
+  }
+
+  @media (max-width: 480px) {
+    #top-bar { padding: 12px 12px 12px 58px; }
+    .chapter-num { width: 36px; height: 36px; font-size: 1rem; }
+    .chapter-header-text h2 { font-size: 1rem; }
+    .content { padding: 10px; }
+    .chapter-body { padding: 12px; }
+    .card h3 { font-size: 0.85rem; }
+    .card ul li { font-size: 0.8rem; }
+  }
+
   .steps-inline { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
   .step {
     background: var(--gray);
@@ -275,6 +340,9 @@
 </style>
 </head>
 <body>
+
+<button id="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <aside id="sidebar">
   <div id="sidebar-header">
@@ -1756,11 +1824,18 @@
 </div><!-- #main -->
 
 <script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+
 // Smooth scroll & active nav
 document.querySelectorAll('#nav-list a').forEach(a => {
   a.addEventListener('click', e => {
     document.querySelectorAll('#nav-list a').forEach(x => x.classList.remove('active'));
     a.classList.add('active');
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
   });
 });
 
