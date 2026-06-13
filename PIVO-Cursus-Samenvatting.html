@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIVO Cursus 2026 – Samenvatting Hulpverlener-Ambulancier</title>
+<style>
+  :root {
+    --red: #c0392b;
+    --red-dark: #922b21;
+    --red-light: #f9ebea;
+    --blue: #1a5276;
+    --blue-mid: #2e86c1;
+    --blue-light: #eaf4fb;
+    --green: #1e8449;
+    --green-light: #eafaf1;
+    --orange: #d35400;
+    --orange-light: #fef9e7;
+    --gray: #f4f6f7;
+    --border: #dce3e9;
+    --text: #1c2833;
+    --text-muted: #5d6d7e;
+    --sidebar-w: 280px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--text); background: #f0f3f7; display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--blue);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  #sidebar-header {
+    padding: 22px 18px 16px;
+    background: var(--red-dark);
+    border-bottom: 3px solid var(--red);
+  }
+  #sidebar-header h1 { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
+  #sidebar-header p { font-size: 0.72rem; opacity: 0.8; margin-top: 4px; }
+  #sidebar nav { padding: 10px 0 20px; }
+  .nav-section-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.5;
+    padding: 14px 18px 4px;
+  }
+  #sidebar nav a {
+    display: block;
+    padding: 8px 18px 8px 20px;
+    color: rgba(255,255,255,0.88);
+    text-decoration: none;
+    font-size: 0.82rem;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    line-height: 1.35;
+  }
+  #sidebar nav a:hover, #sidebar nav a.active {
+    background: rgba(255,255,255,0.12);
+    border-left-color: #e74c3c;
+    color: #fff;
+  }
+  #sidebar nav a span.num {
+    display: inline-block;
+    width: 22px;
+    font-weight: 700;
+    opacity: 0.6;
+    font-size: 0.75rem;
+  }
+
+  /* MAIN */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 0 0 60px;
+  }
+  #top-bar {
+    background: var(--red);
+    color: #fff;
+    padding: 18px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  #top-bar h2 { font-size: 1.15rem; font-weight: 600; }
+  #top-bar .badge {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .content { padding: 30px 40px; max-width: 1100px; }
+
+  /* CHAPTER SECTION */
+  .chapter {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 36px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .chapter-header {
+    padding: 20px 28px 16px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .chapter-num {
+    background: var(--red);
+    color: #fff;
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .chapter-num.so { background: var(--orange); }
+  .chapter-header-text h2 { font-size: 1.15rem; font-weight: 700; color: var(--blue); }
+  .chapter-header-text p { font-size: 0.83rem; color: var(--text-muted); margin-top: 3px; }
+  .chapter-body { padding: 22px 28px; }
+
+  /* CARDS inside chapters */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 14px; }
+  .card {
+    border-radius: 8px;
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+  }
+  .card.blue { background: var(--blue-light); border-color: #aed6f1; }
+  .card.green { background: var(--green-light); border-color: #a9dfbf; }
+  .card.red { background: var(--red-light); border-color: #f1948a; }
+  .card.orange { background: var(--orange-light); border-color: #f0b27a; }
+  .card.gray { background: var(--gray); border-color: var(--border); }
+  .card h3 { font-size: 0.88rem; font-weight: 700; margin-bottom: 8px; }
+  .card.blue h3 { color: var(--blue); }
+  .card.green h3 { color: var(--green); }
+  .card.red h3 { color: var(--red-dark); }
+  .card.orange h3 { color: var(--orange); }
+  .card ul { list-style: none; padding: 0; }
+  .card ul li { font-size: 0.82rem; line-height: 1.6; padding: 2px 0 2px 14px; position: relative; color: #34495e; }
+  .card ul li::before { content: "→"; position: absolute; left: 0; color: inherit; opacity: 0.6; }
+
+  /* PROTOCOL BOX */
+  .protocol {
+    background: #fff;
+    border: 2px solid var(--blue-mid);
+    border-radius: 8px;
+    margin-top: 14px;
+    overflow: hidden;
+  }
+  .protocol-title {
+    background: var(--blue-mid);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 7px 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .protocol-body { padding: 14px 18px; }
+  .protocol-body ol { padding-left: 18px; }
+  .protocol-body ol li { font-size: 0.83rem; line-height: 1.65; margin-bottom: 3px; color: #2c3e50; }
+  .protocol-body p { font-size: 0.83rem; line-height: 1.65; color: #2c3e50; }
+
+  /* ALERT BOX */
+  .alert {
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .alert.danger { background: #fdf3f2; border: 1px solid #f1948a; color: #7b241c; }
+  .alert.warning { background: #fef9e7; border: 1px solid #f9ca74; color: #784212; }
+  .alert.info { background: var(--blue-light); border: 1px solid #aed6f1; color: #1a5276; }
+  .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* STAANDE ORDER */
+  .so-block {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
+  .so-header {
+    background: var(--orange);
+    color: #fff;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .so-num {
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 2px 9px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .so-header h3 { font-size: 0.95rem; font-weight: 700; }
+  .so-body { padding: 16px 20px; }
+  .so-body p.voor { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; font-style: italic; }
+  .so-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 700px) { .so-grid { grid-template-columns: 1fr; } }
+
+  /* SECTION DIVIDER */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    margin: 18px 0 12px;
+  }
+
+  /* SEARCH */
+  #search-wrap { padding: 12px 18px; background: rgba(0,0,0,0.2); }
+  #search { width: 100%; padding: 7px 10px; border-radius: 6px; border: none; font-size: 0.82rem; background: rgba(255,255,255,0.15); color: #fff; outline: none; }
+  #search::placeholder { color: rgba(255,255,255,0.5); }
+
+  .abc-tag {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
+  .abc-tag.b { background: var(--blue-mid); }
+  .abc-tag.c { background: var(--green); }
+  .abc-tag.d { background: var(--orange); }
+
+  .steps-inline { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .step {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .step .sn { background: var(--blue); color: #fff; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 700; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <h1>🚑 PIVO Cursus 2026</h1>
+    <p>Hulpverlener-Ambulancier · Samenvatting</p>
+  </div>
+  <div id="search-wrap">
+    <input id="search" type="text" placeholder="Zoeken..." oninput="filterNav(this.value)">
+  </div>
+  <nav id="nav-list">
+    <div class="nav-section-title">Hoofdstukken</div>
+    <a href="#hfst1"><span class="num">1</span> Het menselijk lichaam</a>
+    <a href="#hfst2"><span class="num">2</span> De eerste minuten</a>
+    <a href="#hfst3"><span class="num">3</span> Levensbedreigende aandoeningen</a>
+    <a href="#hfst4"><span class="num">4</span> De gewonde patiënt</a>
+    <a href="#hfst5"><span class="num">5</span> De zieke patiënt</a>
+    <a href="#hfst6"><span class="num">6</span> Zwangerschap &amp; bevalling</a>
+    <a href="#hfst7"><span class="num">7</span> Hulpverlening bij kinderen</a>
+    <a href="#hfst8"><span class="num">8</span> Omgevingsurgenties</a>
+    <a href="#hfst9"><span class="num">9</span> Psychiatrische aandoeningen</a>
+    <a href="#hfst10"><span class="num">10</span> Verplaatsen van de patiënt</a>
+    <a href="#hfst11"><span class="num">11</span> Noodplanning &amp; rampen</a>
+    <a href="#hfst12"><span class="num">12</span> Organisatie DGH</a>
+    <a href="#hfst13"><span class="num">13</span> Technieken</a>
+    <div class="nav-section-title">Staande Orders</div>
+    <a href="#so01"><span class="num">O1</span> Nakende bevalling</a>
+    <a href="#so02"><span class="num">O2</span> Pijnstilling trauma</a>
+    <a href="#so04"><span class="num">O4</span> Brandwonden</a>
+    <a href="#so06"><span class="num">O6</span> Convulsies</a>
+    <a href="#so10"><span class="num">O10</span> Hyperthermie</a>
+    <a href="#so11"><span class="num">O11</span> Hypoglycemie</a>
+    <a href="#so12"><span class="num">O12</span> Hypothermie</a>
+    <a href="#so13"><span class="num">O13</span> Bewustzijnsdaling</a>
+    <a href="#so14"><span class="num">O14</span> Ademhalingsfalen</a>
+    <a href="#so16"><span class="num">O16</span> CO-intoxicatie</a>
+    <a href="#so17"><span class="num">O17</span> Verdrinking</a>
+    <a href="#so18"><span class="num">O18</span> Zwaar ongeval / MIP</a>
+    <a href="#so20"><span class="num">O20</span> CPR volwassene</a>
+    <a href="#so24"><span class="num">O24</span> Pijn op de borst</a>
+    <a href="#so26"><span class="num">O26</span> Amputatie</a>
+    <a href="#so27"><span class="num">O27</span> Open breuk</a>
+    <a href="#so28"><span class="num">O28</span> Ritmestoornissen</a>
+    <a href="#so29"><span class="num">O29</span> CVA / Beroerte</a>
+  </nav>
+</aside>
+
+<div id="main">
+  <div id="top-bar">
+    <div>
+      <h2>Samenvatting – Hulpverlener-Ambulancier</h2>
+    </div>
+    <span class="badge">PIVO 2026</span>
+    <a href="staande-orders.html" style="margin-left:auto; display:inline-flex; align-items:center; gap:8px; padding:7px 16px; background:rgba(255,255,255,0.18); color:#fff; border:1px solid rgba(255,255,255,0.35); border-radius:50px; font-size:0.82rem; font-weight:600; text-decoration:none; transition:background 0.18s; white-space:nowrap;">🚨 Staande Orders</a>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== HOOFDSTUK 1 ===== -->
+    <div class="chapter" id="hfst1">
+      <div class="chapter-header">
+        <div class="chapter-num">1</div>
+        <div class="chapter-header-text">
+          <h2>Het Menselijk Lichaam</h2>
+          <p>Anatomie, fysiologie en lichaamsstelsels relevant voor de hulpverlener-ambulancier</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="section-label">Kerninhoud</div>
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>🧠 Zenuwstelsel</h3>
+            <ul>
+              <li>Hersenen = centrale computer; beschadiging na 4–6 min zonder O₂</li>
+              <li>Na 10 min: hersencellen sterven af (biologische dood)</li>
+              <li>Ruggenmerg in wervelkolom – breuk = levenslange verlamming mogelijk</li>
+              <li>WAPA-score meten om bewustzijn te beoordelen</li>
+            </ul>
+          </div>
+          <div class="card blue">
+            <h3>🫁 Ademhalingsstelsel</h3>
+            <ul>
+              <li>Normale freq. volwassene: 12–20/min; kind: 20–30/min; baby: 30–40/min</li>
+              <li>Gasuitwisseling ter hoogte van de longblaasjes (alveoli)</li>
+              <li>Probleem → cyanose (blauwe verkleuring lippen/nagels)</li>
+            </ul>
+          </div>
+          <div class="card blue">
+            <h3>❤️ Hart- en bloedvatenstelsel</h3>
+            <ul>
+              <li>Hartslag voelen aan halsslagader (nooit met duim)</li>
+              <li>Bloed vervoert O₂ en afvalstoffen door het lichaam</li>
+              <li>Falen → shock → orgaanfalen</li>
+            </ul>
+          </div>
+          <div class="card gray">
+            <h3>🦴 Bewegingsstelsel &amp; lichaamsstreken</h3>
+            <ul>
+              <li>Anatomische houding: ruglig, handpalmen naar voren</li>
+              <li>Links/rechts altijd vanuit de patiënt beschreven</li>
+              <li>Buik: 4 kwadranten (kruislijn door navel)</li>
+              <li>Wervelzuil: cervicaal – dorsaal – lumbaal – sacraal – coccyx</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 2 ===== -->
+    <div class="chapter" id="hfst2">
+      <div class="chapter-header">
+        <div class="chapter-num">2</div>
+        <div class="chapter-header-text">
+          <h2>De Eerste Minuten</h2>
+          <p>Systematische aanpak: veiligheidsbeoordeling, ABC, WAPA, tweede beoordeling en vervoer</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+
+        <div class="section-label">Werkwijze bij aankomst</div>
+        <div class="protocol">
+          <div class="protocol-title">⚡ Stap-voor-stap protocol – Eerste minuten</div>
+          <div class="protocol-body">
+            <ol>
+              <li><strong>Beoordeel de veiligheid:</strong> gevaar voor jezelf, patiënt, omstanders? Handschoenen aan. Brand/gas/elektriciteit/instortingsgevaar?</li>
+              <li><strong>Meld aan HC 112</strong> dat je ter plaatse bent.</li>
+              <li><strong>Verzamel informatie:</strong> omstanders, houding patiënt, mechanisme van het letsel.</li>
+              <li><strong>Snelle eerste beoordeling – ABC:</strong><br>
+                <span class="abc-tag">A</span> Ademweg vrij? (Aanspreken, bewustzijn)<br>
+                <span class="abc-tag b">B</span> Ademt de patiënt? (kijk-luister-voel)<br>
+                <span class="abc-tag c">C</span> Circulatie? (hartslag aan halsslagader, ernstige bloedingen stelpen)</li>
+              <li><strong>Kritieke toestand?</strong> → Onmiddellijk MUG oproepen + vitale functies ondersteunen.</li>
+              <li><strong>Fijnere eerste beoordeling:</strong> WAPA (Wakker – Aanspreekbaar – Pijngevoelig – Areactief) + GCS + wervelbreuken uitsluiten.</li>
+              <li><strong>Tweede beoordeling</strong> (enkel als niet-kritiek): hoofd-tot-teen observatie, ondervraging patiënt (SAMPLE), gericht zoeken naar verborgen letsels.</li>
+              <li><strong>Vervoer:</strong> patiënt instabiel? MUG vragen. Stabiel? Voorzichtig rijden, continu observeren, ziekenhuis verwittigen.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="alert danger">
+          <span class="alert-icon">⚠️</span>
+          <span>Nooit afwijken van de ABC-volgorde, hoe spectaculair de letsels ook zijn. Een patiënt kan stikken terwijl je een wonde onderzoekt.</span>
+        </div>
+
+        <div class="section-label">Ondervraging – SAMPLE</div>
+        <div class="card-grid">
+          <div class="card gray">
+            <h3>📋 SAMPLE-anamnese</h3>
+            <ul>
+              <li><strong>S</strong>ymptomen – Wat voelt de patiënt?</li>
+              <li><strong>A</strong>llergieën – Bekende allergieën?</li>
+              <li><strong>M</strong>edicatie – Welke geneesmiddelen?</li>
+              <li><strong>P</strong>atient history – Voorgeschiedenis?</li>
+              <li><strong>L</strong>aatste maaltijd – Wanneer gegeten/gedronken?</li>
+              <li><strong>E</strong>vents – Wat is er precies gebeurd?</li>
+            </ul>
+          </div>
+          <div class="card gray">
+            <h3>🔵 WAPA – Bewustzijn</h3>
+            <ul>
+              <li><strong>W</strong>akker – Kent naam, datum, plaats</li>
+              <li><strong>A</strong>anspreekbaar – Reageert op stem</li>
+              <li><strong>P</strong>ijngevoelig – Reageert op pijnprikkel</li>
+              <li><strong>A</strong>reactief – Geen reactie</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 3 ===== -->
+    <div class="chapter" id="hfst3">
+      <div class="chapter-header">
+        <div class="chapter-num">3</div>
+        <div class="chapter-header-text">
+          <h2>Levensbedreigende Aandoeningen</h2>
+          <p>Ademhalingsfalen, hartstilstand (CPR/AED), shock en bloedverlies</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+
+        <div class="section-label">3.1 – Ademhalingsfalen</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>🔴 Herkennen</h3>
+            <ul>
+              <li>Angst, paniek, moeizame ademhaling</li>
+              <li>Cyanose (blauwe lippen, nagels)</li>
+              <li>Piepen, snurken, gorgelen bij ademhaling</li>
+              <li>Freq. &gt;20/min (tachypnoe) of &lt;10/min (bradypnoe)</li>
+              <li>Bewustzijnsverlies bij ernstige gevallen</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Patiënt bij bewustzijn: halfzittende houding, O₂ toedienen</li>
+              <li>Bewusteloos: rugligging, ademweg vrijmaken</li>
+              <li>Hoofd kantelen + kin heffen (GEEN nekletsel) of kaak-duw (bij nekletsel)</li>
+              <li>Geen ademhaling + geen pols → CPR starten (30:2)</li>
+              <li>MUG oproepen</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">3.2 – CPR (Cardiopulmonaire Reanimatie)</div>
+        <div class="protocol">
+          <div class="protocol-title">🫀 Volgorde CPR – Volwassene (ERC 2021)</div>
+          <div class="protocol-body">
+            <ol>
+              <li>Controleer veiligheid → Spreek patiënt aan → Geen reactie = bewusteloos</li>
+              <li>Vraag hulp – Roep MUG op via HC 112</li>
+              <li>Rugligging op harde, vlakke ondergrond</li>
+              <li>Ademweg vrijmaken: hoofd kantelen + kin heffen</li>
+              <li>Controleer ademhaling (max. 10 sec): kijk-luister-voel</li>
+              <li>Geen normale ademhaling → 30 borstcompressies (diepte 5–6 cm, ritme 100–120/min)</li>
+              <li>2 beademingen (1 sec per beademing, borstkas rijzen zien)</li>
+              <li>Herhaal 30:2 zonder onderbreking</li>
+              <li>AED aanleggen zo snel mogelijk – volg de instructies van de AED</li>
+              <li>Stop enkel bij aankomst MUG of zichtbare tekenen van leven</li>
+            </ol>
+          </div>
+        </div>
+        <div class="alert warning">
+          <span class="alert-icon">⚠️</span>
+          <span>Bij verdrinking, vergiftiging of verstikking: start met 5 beademingen vóór borstcompressies.</span>
+        </div>
+
+        <div class="section-label">3.3 – Shock</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>🔴 Herkennen van shock</h3>
+            <ul>
+              <li>Bleek, klam, zwetend, koud aan de huid</li>
+              <li>Versnelde, zwakke pols</li>
+              <li>Verlaagde bloeddruk</li>
+              <li>Versnelde, oppervlakkige ademhaling</li>
+              <li>Angst, verwardheid, bewustzijnsdaling</li>
+              <li>Dorst, misselijkheid</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen bij shock</h3>
+            <ul>
+              <li>Bloedingen stelpen (directe druk)</li>
+              <li>Patiënt neerleggen, benen verheffen (tenzij schedeltrauma of ademhalingsproblemen)</li>
+              <li>Warmte bewaren (isothermische deken)</li>
+              <li>O₂ toedienen</li>
+              <li>MUG oproepen</li>
+              <li>Geen eten/drinken geven</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">3.4 – Bloedverlies</div>
+        <div class="card-grid">
+          <div class="card orange">
+            <h3>🩸 Uitwendige bloeding stelpen</h3>
+            <ul>
+              <li>Directe druk op de wonde (steriel verband/kompres)</li>
+              <li>Drukverband aanleggen</li>
+              <li>Indirecte druk (proximaal van de wonde)</li>
+              <li>Knevel enkel als laatste redmiddel → noteer tijdstip!</li>
+              <li>Geamputeerd deel meenemen naar ziekenhuis (steriel + koel in 1/3 ijs + 2/3 water)</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 Inwendige bloeding herkennen</h3>
+            <ul>
+              <li>Tekenen van shock zonder zichtbaar bloedverlies</li>
+              <li>Opgezette, stijve of pijnlijke buik</li>
+              <li>Bloed uit lichaamsopeningen (oren, neus, mond, rectum)</li>
+              <li>Verkleuring van huid (hematoom) na trauma</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 4 ===== -->
+    <div class="chapter" id="hfst4">
+      <div class="chapter-header">
+        <div class="chapter-num">4</div>
+        <div class="chapter-header-text">
+          <h2>De Gewonde Patiënt</h2>
+          <p>Trauma, wonden, fracturen, wervelbreuken, schedeltrauma en immobilisatietechnieken</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="section-label">Traumabeoordeling</div>
+        <div class="card-grid">
+          <div class="card orange">
+            <h3>⚡ Mechanisme van het letsel</h3>
+            <ul>
+              <li>Stomp trauma vs. penetrerend trauma</li>
+              <li>Val van hoogte, verkeersongeval, explosie</li>
+              <li>Veiligheidsgordel? Airbag? Helm?</li>
+              <li>Uitgeslingerd uit voertuig → altijd wervelletsel vermoeden</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 Hoofd- en schedeltrauma</h3>
+            <ul>
+              <li>Bewustzijnsdaling → GCS meten</li>
+              <li>Bloedverlies uit oren/neus = teken van schedelbasisbreuk</li>
+              <li>Ongelijke pupillen = hersendrukstijging</li>
+              <li>MUG oproepen, halskraag, zijligging NIET bij bewusteloze tenzij noodzakelijk</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>🦴 Wervelbreuken</h3>
+            <ul>
+              <li>Vermoeden bij: nekpijn, tintelingen armen/benen, verlamming, bewusteloosheid na trauma</li>
+              <li>Halskraag aanleggen zo vroeg mogelijk</li>
+              <li>Blok-rol techniek voor verplaatsen</li>
+              <li>Schepbrancard of wervelplank gebruiken</li>
+              <li>MILS-techniek bij intubatie (hoofd immobiliseren)</li>
+            </ul>
+          </div>
+          <div class="card blue">
+            <h3>💉 Fracturen en wonden</h3>
+            <ul>
+              <li>Pijn, zwelling, vervormde stand, crepitatie</li>
+              <li>Immobiliseren vóór verplaatsen (spalk, vacuümmatras)</li>
+              <li>Open fractuur: steriel afdekken, NIET reponeren</li>
+              <li>Pijnstilling via MUG/PIT (O2, analgetica)</li>
+              <li>Aligneren van fracturen = de beste pijnstilling</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">Glasgow Coma Scale (GCS)</div>
+        <div class="protocol">
+          <div class="protocol-title">GCS – Bewustzijn meten (max. 15 punten)</div>
+          <div class="protocol-body">
+            <p><strong>Ogen openen:</strong> Spontaan=4 | Op stem=3 | Op pijn=2 | Geen=1<br>
+            <strong>Verbaal:</strong> Georiënteerd=5 | Verward=4 | Niet ter zake=3 | Onverstaanbaar=2 | Geen=1<br>
+            <strong>Motorisch:</strong> Gehoorzaam=6 | Georiënteerd=5 | Afwerend=4 | Abnormale flexie=3 | Extensie=2 | Geen=1<br>
+            <br>GCS ≤ 8 = ernstig hersenletsel → MUG onmiddellijk oproepen</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 5 ===== -->
+    <div class="chapter" id="hfst5">
+      <div class="chapter-header">
+        <div class="chapter-num">5</div>
+        <div class="chapter-header-text">
+          <h2>De Zieke Patiënt</h2>
+          <p>Pijn op de borst, beroerte, ademhalingsmoeilijkheden, diabetes, toxicologie</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="section-label">5.1 – Pijn op de borst (Acuut Coronair Syndroom)</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>🔴 Herkennen</h3>
+            <ul>
+              <li>Drukkende/beklem­mende pijn achter borstbeen</li>
+              <li>Uitstraling naar links arm, kaak, rug, bovenbuik</li>
+              <li>Overmatig zweten, kortademigheid, misselijkheid</li>
+              <li>Kan ook plots optreden bij inspanning of rust</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen (O24)</h3>
+            <ul>
+              <li>Halfzittende houding, patiënt geruststellen</li>
+              <li>O₂ tot SpO₂ = 94–98%</li>
+              <li>Bloeddruk meten aan beide armen</li>
+              <li>MUG oproepen – ALTIJD</li>
+              <li>Bij ritmestoornis → O28</li>
+              <li>Bij hartstilstand → CPR + AED</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">5.2 – Beroerte (CVA)</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>🔴 FAST-test</h3>
+            <ul>
+              <li><strong>F</strong>ace – Scheef gelaat, mondhoek hangend?</li>
+              <li><strong>A</strong>rm – Kan patiënt beide armen opheffen?</li>
+              <li><strong>S</strong>peech – Spraakstoornis, onbegrijpelijk?</li>
+              <li><strong>T</strong>ime – Onmiddellijk handelen! Noteer tijdstip!</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen (O29)</h3>
+            <ul>
+              <li>FAST-test uitvoeren + tijdstip symptomen noteren</li>
+              <li>Glycemie meten (uitsluiten hypoglycemie)</li>
+              <li>O₂ tot SpO₂ &gt;94%, halfzittende houding</li>
+              <li>ABC stabiel: ziekenhuis ONMIDDELLIJK verwittigen (CT scan klaarzetten)</li>
+              <li>ABC instabiel: MUG oproepen</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">5.3 – Ademhalingsmoeilijkheden (Astma, COPD, Longoedeem)</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>🔴 Herkennen</h3>
+            <ul>
+              <li>Freq. &gt;30/min, cyanose, stridor</li>
+              <li>Verlengde uitademing (astma)</li>
+              <li>Gebruik van hulpademhalingsspieren</li>
+              <li>Kan geen volledige zinnen uitspreken</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen (O14)</h3>
+            <ul>
+              <li>Zittende of halfzittende houding</li>
+              <li>Loszittende tandprotheses verwijderen</li>
+              <li>100% O₂ toedienen</li>
+              <li>Aerosoltherapie op voorschrift MUG</li>
+              <li>MUG oproepen bij ernstige klachten</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">5.4 – Diabetes / Hypoglycemie</div>
+        <div class="card-grid">
+          <div class="card orange">
+            <h3>🍬 Hypoglycemie – Herkennen</h3>
+            <ul>
+              <li>Zweten, bleekheid, trillen</li>
+              <li>Verwardheid, agressiviteit, malaise</li>
+              <li>Glycemie &lt; 60 mg/dl</li>
+              <li>Kan lijken op dronkenschap of CVA</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen (O11)</h3>
+            <ul>
+              <li>Bewust: cola/suiker + brood geven, behandelende arts contacteren</li>
+              <li>Bewustzijnsstoornissen: MUG oproepen</li>
+              <li>Bewusteloos: stabiele zijligging, NIETS per os, MUG oproepen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 6 ===== -->
+    <div class="chapter" id="hfst6">
+      <div class="chapter-header">
+        <div class="chapter-num">6</div>
+        <div class="chapter-header-text">
+          <h2>Zwangerschap en Spoedbevalling</h2>
+          <p>Malinas-score, nakende bevalling, postpartum zorg, complicaties</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="card-grid">
+          <div class="card orange">
+            <h3>📊 Malinas-score (≥24 weken)</h3>
+            <ul>
+              <li>Score &lt;5: Vervoer naar ziekenhuis, linkerzijligging</li>
+              <li>Score ≥5: Bevalling dreigt – MUG oproepen, klaarstellen voor bevalling</li>
+              <li>Parameters: aantal zwangerschappen, duur arbeid, duur contracties, interval, vruchtwater</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen bij bevalling (O1)</h3>
+            <ul>
+              <li>ABC evalueren moeder</li>
+              <li>MUG oproepen bij convulsies of bevalling ter plaatse</li>
+              <li>Patiënte omgekeerd op brancard installeren</li>
+              <li>Perineum ondersteunen bij uitdrijving</li>
+              <li>Baby: droog afvegen, warmhouden (muts + deken), navelstreng afklemmen</li>
+              <li>Placenta opvangen en meenemen</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>⚠️ Complicaties</h3>
+            <ul>
+              <li>Stuitligging: niet aankomen, laten doen, MUG oproepen</li>
+              <li>Navelstrengprolaps: Trendelenburg-houding, MUG dringend</li>
+              <li>&lt;24 weken (niet levensvatbaar): ABC, shock signalen herkennen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 7 ===== -->
+    <div class="chapter" id="hfst7">
+      <div class="chapter-header">
+        <div class="chapter-num">7</div>
+        <div class="chapter-header-text">
+          <h2>Hulpverlening bij Kinderen</h2>
+          <p>Anatomische verschillen, benadering kind, CPR zuigeling/kind, luchtwegobstructie</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>🔵 Verschillen kind – volwassene</h3>
+            <ul>
+              <li>Ademhaling sneller (20–30/min bij kind; 30–40/min bij baby)</li>
+              <li>Hartslag sneller bij kinderen</li>
+              <li>Hoofd proportioneel groter → risico op nekletsel bij val</li>
+              <li>Luchtwegen nauwer → sneller obstructie</li>
+              <li>Decompensatie trager maar dan plots ernstig</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ CPR Kind (&gt;1j – puberteit)</h3>
+            <ul>
+              <li>5 reddings­beademingen eerst (zoals bij verdrinking)</li>
+              <li>30 compressies : 2 beademingen (of 15:2 met 2 hulpverleners)</li>
+              <li>Diepte: 1/3 van de borstdiameter</li>
+              <li>1 hand of 2 handen afhankelijk van grootte kind</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ CPR Zuigeling (&lt;1j)</h3>
+            <ul>
+              <li>5 reddings­beademingen (mond + neus samen)</li>
+              <li>30:2 met 2 vingers op borstbeen (midden)</li>
+              <li>Diepte: 4 cm</li>
+              <li>Hoofd LICHT kantelen (niet hyperextensie)</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>🔴 Luchtwegobstructie kind</h3>
+            <ul>
+              <li>Bewust kind met obstructie: 5 rugklopjes + 5 borstcompressies (zuigeling) of 5 abdominale stoten (Heimlich, &gt;1j)</li>
+              <li>Bewusteloos kind: 5 beademingen → CPR starten</li>
+              <li>Nooit blind met vinger in de mond tasten bij kinderen</li>
+            </ul>
+          </div>
+        </div>
+        <div class="alert info">
+          <span class="alert-icon">💡</span>
+          <span>Extra aandacht voor psychologische begeleiding van het kind én de ouders. Gebruik aangepaste communicatie (rustige stem, op ooghoogte gaan zitten).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 8 ===== -->
+    <div class="chapter" id="hfst8">
+      <div class="chapter-header">
+        <div class="chapter-num">8</div>
+        <div class="chapter-header-text">
+          <h2>Urgenties door Omgevingsfactoren</h2>
+          <p>Brandwonden, hyperthermie, hypothermie, verdrinking, CO-intoxicatie, elektrische letsels</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="section-label">8.1 – Brandwonden (O4)</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>🔴 Ernst bepalen (Regel van Wallace)</h3>
+            <ul>
+              <li>Hoofd+hals=9%, elk arm=9%, borst=9%, buik=9%, rug=18%, elk been=18%, genitaliën=1%</li>
+              <li>MUG bij: TLO ≥15% (volw.) of ≥10% (kind/bejaarde), 3e graad &gt;5%, gelaat/hals/luchtwegen/genitaliën, elektrisch, shock</li>
+              <li>Diepte: 1e graad (rood), 2e graad (blaren), 3e graad (leer-achtig, geen pijn)</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Veiligheid: bescherm jezelf bij chemische wonden</li>
+              <li>ABC controleren</li>
+              <li>Kleding verwijderen (NIET bij ingesmolten kleding), juwelen</li>
+              <li>Koelen met lauw stromend water (15 cm afstand) tot pijn weg → max. 20 min</li>
+              <li>Hypothermie vermijden – isothermische deken</li>
+              <li>Afdekken met brandwonden­verband of natte steriele kompressen</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">8.2 – Hyperthermie (O10)</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>🔴 Herkennen</h3>
+            <ul>
+              <li>Temp. ≥40°C, droge huid (stopt met zweten)</li>
+              <li>Verwardheid, agitatie, epileptisch aanval, coma</li>
+              <li>Tachycardie, shock, hyperventilatie</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Uit de hitte brengen, uitkleden</li>
+              <li>ABC, O₂, MUG oproepen</li>
+              <li>Snel afkoelen: vochtige doeken, ijs in hals/oksels/liesplooien (op advies MUG)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">8.3 – Hypothermie (O12)</div>
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>❄️ Gradaties</h3>
+            <ul>
+              <li>Mild (T &gt;32°C): rillen, passieve opwarming</li>
+              <li>Ernstig (28–32°C): geen rillen, minimale mobilisatie, horizontaal vervoer</li>
+              <li>Zeer ernstig (&lt;28°C): hartstilstand mogelijk, CPR + evacuatie</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Uiterst voorzichtige mobilisatie!</li>
+              <li>Natte kleding verwijderen, afdrogen</li>
+              <li>Isothermische deken (passieve opwarming)</li>
+              <li>MUG oproepen</li>
+              <li>Bij hartstilstand: CPR + evacuatie, nooit te vroeg stoppen</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-label">8.4 – Verdrinking (O17)</div>
+        <div class="card-grid">
+          <div class="card red">
+            <h3>⚠️ Let op</h3>
+            <ul>
+              <li>Altijd horizontaal evacueren uit water</li>
+              <li>Elk ondiepe-water verdrinkingsslachtoffer = wervelletsel mogelijk</li>
+              <li>Altijd onderkoeld vermoeden</li>
+              <li>Elk (bijna-)verdrinkingsslachtoffer → naar ziekenhuis, ook asymptomatisch</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Veiligheid eigen team eerst!</li>
+              <li>ABC, CPR indien nodig</li>
+              <li>Kleding uit, afdrogen, isothermische deken</li>
+              <li>MUG oproepen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 9 ===== -->
+    <div class="chapter" id="hfst9">
+      <div class="chapter-header">
+        <div class="chapter-num">9</div>
+        <div class="chapter-header-text">
+          <h2>Psychiatrische Aandoeningen &amp; Psychologische Stress</h2>
+          <p>Crisis, suïcide, agressie, omgaan met slachtoffers en hulpverleners in stress</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>🧠 Psychiatrische spoedgevallen</h3>
+            <ul>
+              <li>Zijn altijd crisistoestanden – neem ernstig</li>
+              <li>Suïcidepoging: nooit minimaliseren, veiligheid bewaren</li>
+              <li>Agitatie/agressie: deëscalatie, MUG + politie oproepen</li>
+              <li>Psychose: rustige, duidelijke communicatie, geen discussie</li>
+              <li>Paniekstoornissen: geruststellen, rustige ademhaling aanmoedigen</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Benadering psychiatrische patiënt</h3>
+            <ul>
+              <li>Stel jezelf voor, kalm en duidelijk</li>
+              <li>Op ooghoogte, open lichaamstaal</li>
+              <li>Luister actief, stel open vragen</li>
+              <li>Oordeel niet over het gedrag</li>
+              <li>Veiligheid team: deur op vluchtroute houden, nooit alleen met agressieve patiënt</li>
+              <li>NIMMER fysieke dwang zonder politie</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>😰 Psychologische eerste hulp (PTSS preventie)</h3>
+            <ul>
+              <li>Na ingrijpende interventie: debriefing met team</li>
+              <li>Erken de emotionele impact op hulpverleners</li>
+              <li>Professionele opvang inschakelen bij herhaling</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 10 ===== -->
+    <div class="chapter" id="hfst10">
+      <div class="chapter-header">
+        <div class="chapter-num">10</div>
+        <div class="chapter-header-text">
+          <h2>Verplaatsen van de Patiënt</h2>
+          <p>Ergonomie, tillen, immobilisatiematerialen, schepbrancard, korrelmatras, wervelplank</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>🏋️ Basisregels bij tillen</h3>
+            <ul>
+              <li>Rug recht houden, tillen met de benen</li>
+              <li>Last zo dicht mogelijk bij het lichaam</li>
+              <li>Voeten op schouderbreedte, stabiele basis</li>
+              <li>Draaien met de voeten, niet met de rug</li>
+              <li>Teamcommunicatie: één persoon geeft commando's</li>
+            </ul>
+          </div>
+          <div class="card gray">
+            <h3>🛏️ Materialen</h3>
+            <ul>
+              <li><strong>Schepbrancard:</strong> wervelbreuken, bewusteloze patiënt</li>
+              <li><strong>Korrelmatras:</strong> complexe positionering, trauma</li>
+              <li><strong>Wervelplank (spine board):</strong> spinale immobilisatie in water/auto</li>
+              <li><strong>KED (Extrication Device):</strong> patiënt uit voertuig bevrijden</li>
+              <li><strong>Bekkengordel:</strong> bekkeninstabiliteit</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>⚠️ Let op bij verplaatsen</h3>
+            <ul>
+              <li>Altijd halskraag voor verplaatsen bij vermoeden wervelletsel</li>
+              <li>Blok-rol techniek: hoofd-hals-romp als één blok draaien</li>
+              <li>Log-roll: minstens 3 hulpverleners</li>
+              <li>Nooit aan een ledemaat trekken bij fractuur</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 11 ===== -->
+    <div class="chapter" id="hfst11">
+      <div class="chapter-header">
+        <div class="chapter-num">11</div>
+        <div class="chapter-header-text">
+          <h2>Noodplanning en Rampenhulpverlening</h2>
+          <p>MIP, START-triage, disciplines, METTAG-systeem</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>⚕️ De 5 disciplines</h3>
+            <ul>
+              <li>D1: Brandweer (redding, brand, gevaarlijke stoffen)</li>
+              <li>D2: Geneeskundige hulp (ambulanciers, MUG, SIM)</li>
+              <li>D3: Politie (veiligheid, perimeter, verkeer)</li>
+              <li>D4: Logistiek (transport, voeding, uitrusting)</li>
+              <li>D5: Overheid / Coördinatie (burgemeester, gouverneur)</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>🚨 MIP – Wanneer activeren?</h3>
+            <ul>
+              <li>≥5 zwaargewonden, of ≥10 gewonden (onbekende ernst), of ≥20 personen in gevaar</li>
+              <li>Standaard uitruk: 3 MUG + 5 ambulances + SIM</li>
+              <li>Afgekondigd door HC 112 op vraag van Dir-Med, gezondheidsinspecteur of eerste MUG</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🏷️ START-triage / METTAG</h3>
+            <ul>
+              <li><strong style="color:#c0392b">T1 – Rood:</strong> Absolute urgentie, onmiddellijke vitale handeling nodig</li>
+              <li><strong style="color:#f39c12">T2 – Oranje/Geel:</strong> Relatieve urgentie, stabilisatie mogelijk</li>
+              <li><strong style="color:#27ae60">T3 – Groen:</strong> Lichte letsels, kan zitten</li>
+              <li><strong>T0 – Zwart:</strong> Dood of niet reddbaar</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Gedrag ter plaatse MIP</h3>
+            <ul>
+              <li>Aanrijroute en PEB opvragen</li>
+              <li>Orders Dir-Med opvolgen</li>
+              <li>Communicatie op rampgespreksgroep beperken</li>
+              <li>Veiligheid team altijd primair!</li>
+              <li>Verzamel info vóór actie – organisatie is belangrijker dan onmiddellijk ingrijpen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 12 ===== -->
+    <div class="chapter" id="hfst12">
+      <div class="chapter-header">
+        <div class="chapter-num">12</div>
+        <div class="chapter-header-text">
+          <h2>Organisatie van de Dringende Geneeskundige Hulpverlening</h2>
+          <p>Wetgeving, HC 112, MUG, PIT, bevoegdheden hulpverlener-ambulancier</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>🏥 Het DGH-systeem</h3>
+            <ul>
+              <li>HC 112: Hulpcentrum – coördineert alle interventies</li>
+              <li>MUG: Mobiele Urgentie Groep – arts + verpleegkundige</li>
+              <li>PIT: Paramedisch Interventie Team</li>
+              <li>Ambulancier: eerste schakel, stabilisatie en vervoer</li>
+            </ul>
+          </div>
+          <div class="card gray">
+            <h3>📋 Bevoegdheden ambulancier</h3>
+            <ul>
+              <li>ABC + basisreanimatie (CPR, AED)</li>
+              <li>Luchtwegmanagement (canule, masker, ballon)</li>
+              <li>O₂ toedienen</li>
+              <li>Immobilisatie</li>
+              <li>Bloedingen stelpen</li>
+              <li>Medicatie toedienen enkel op voorschrift MUG/arts</li>
+              <li>Bilan opmaken en doorgeven</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>📡 Communicatie</h3>
+            <ul>
+              <li>ASTRID / TETRA-netwerk</li>
+              <li>NATO-alfabet voor communicatie</li>
+              <li>Statusmeldingen: aanmelding, ter plaatse, vertrek, aankomst ZH</li>
+              <li>Bilan doorgeven: locatie, patiënt, interventie, bestemming</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOOFDSTUK 13 ===== -->
+    <div class="chapter" id="hfst13">
+      <div class="chapter-header">
+        <div class="chapter-num">13</div>
+        <div class="chapter-header-text">
+          <h2>Technieken</h2>
+          <p>Radiocommunicatie, procedures, monitoring, medicatie, intubatie, infuus</p>
+        </div>
+      </div>
+      <div class="chapter-body">
+        <div class="card-grid">
+          <div class="card blue">
+            <h3>📡 ASTRID / Radiocommunicatie</h3>
+            <ul>
+              <li>TETRA-netwerk: beveiligd, nationaal dekkend</li>
+              <li>Talkgroepen: operationeel, ramp, MUG-coördinatie</li>
+              <li>Altijd identificeren: "Ambulance [nummer] aan HC 112"</li>
+              <li>NATO-alfabet correct gebruiken bij twijfel</li>
+            </ul>
+          </div>
+          <div class="card gray">
+            <h3>🩺 Monitoring (op voorschrift MUG)</h3>
+            <ul>
+              <li>SpO₂ meting (saturatiemeter)</li>
+              <li>ECG-monitoring (3-of 12-afleidingen)</li>
+              <li>Bloeddruk (manueel of automatisch)</li>
+              <li>Capillaire glycemie (glucometer)</li>
+              <li>Temperatuur meting</li>
+            </ul>
+          </div>
+          <div class="card gray">
+            <h3>💊 Luchtwegmanagement</h3>
+            <ul>
+              <li>Orofaryngeale canule (Guedel): bewusteloze patiënt zonder klemreflex</li>
+              <li>Nasofaryngeale canule: bewusteloze patiënt mét klemreflex</li>
+              <li>Ballonklepmasker (BVM): twee hulpverleners</li>
+              <li>Supraglottische luchtweg (LMA): op voorschrift MUG</li>
+              <li>Endotracheale intubatie: enkel door MUG-arts</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>💉 Vasculaire toegang (hulp aan MUG)</h3>
+            <ul>
+              <li>IV-katheter plaatsen en toezicht perifeer infuus</li>
+              <li>IO (intra-osseaal) bij kinderen of als IV niet lukt</li>
+              <li>Medicatie voorbereiden op voorschrift arts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STAANDE ORDERS SECTIE ===== -->
+    <div class="chapter" id="staande-orders-header" style="background: var(--orange); color: white; border: none;">
+      <div style="padding: 22px 28px; display:flex; align-items:center; gap:16px;">
+        <div style="font-size:2rem;">📋</div>
+        <div>
+          <h2 style="font-size:1.25rem; color:#fff;">Staande Orders – Protocollen</h2>
+          <p style="color:rgba(255,255,255,0.8); font-size:0.85rem;">Officiële protocollen voor veelvoorkomende spoedinterventies (juni 2018)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 01 -->
+    <div class="so-block" id="so01">
+      <div class="so-header">
+        <span class="so-num">O 01</span>
+        <h3>Nakende Bevalling / Onmiddellijke Postpartum Zorg</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: zwangere vrouwen &lt;24 weken of ≥24 weken</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Algemene maatregelen</h3>
+            <ul>
+              <li>ABC evalueren moeder</li>
+              <li>Info inwinnen: pariteit, bevallingsdatum, bloeding, convulsies</li>
+              <li>&lt;24 wk: tekenen shock herkennen, MUG overwegen</li>
+              <li>≥24 wk: Malinas-score berekenen</li>
+              <li>Score &lt;5 → vervoer; Score ≥5 → MUG oproepen + klaarstellen bevalling</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>⚠️ Specifieke zorg (enkel ambulanciers)</h3>
+            <ul>
+              <li>Stuitligging: niet aankomen, MUG dringend</li>
+              <li>Navelstrengprolaps: Trendelenburg-houding</li>
+              <li>Perineum ondersteunen bij uitdrijving</li>
+              <li>Baby: droog + warm + muts, navelstreng afklemmen, op buik moeder</li>
+              <li>ABC baby + CPR indien nodig</li>
+              <li>Placenta opvangen en meenemen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 02 -->
+    <div class="so-block" id="so02">
+      <div class="so-header">
+        <span class="so-num">O 02</span>
+        <h3>Pijnstilling bij Breuken, Wonden en Amputaties</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: patiënt met pijn ten gevolge van trauma</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Veiligheid, ABC, bloedingen stelpen</li>
+              <li>Milde pijn (4–7/10): immobiliseren, voorzichtig vervoer</li>
+              <li>Hevige pijn (&gt;7/10): MUG oproepen voor analgesie</li>
+              <li>Immobiliseren is de beste pijnstilling!</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>⚠️ Amputatie</h3>
+            <ul>
+              <li>Geamputeerd deel steriel inpakken</li>
+              <li>Bewaren in plastic zak → in recipiënt met 1/3 ijs + 2/3 water</li>
+              <li>Tijdstip aanleggen knevel noteren</li>
+              <li>Meenemen naar ziekenhuis!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 04 -->
+    <div class="so-block" id="so04">
+      <div class="so-header">
+        <span class="so-num">O 04</span>
+        <h3>Brandwonden</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: thermische, elektrische of chemische brandwonden</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Veiligheid! (chemisch: bescherm jezelf)</li>
+              <li>ABC + CPR indien nodig</li>
+              <li>Ernst bepalen: TLO (Wallace-regel) + diepte</li>
+              <li>Kleding verwijderen, juwelen in aangetaste zone</li>
+              <li>Koelen met lauw stromend water, 15 cm afstand tot pijn weg</li>
+              <li>Hypothermie voorkomen, isothermische deken</li>
+              <li>Afdekken brandwondverband of natte steriele kompressen</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 MUG oproepen bij</h3>
+            <ul>
+              <li>TLO ≥15% (volw.) of ≥10% (kind/bejaarde)</li>
+              <li>3e graad &gt;5%</li>
+              <li>Gelaat / hals / luchtwegen / genitaliën</li>
+              <li>Elektrische verbranding</li>
+              <li>Shock of hevige pijn</li>
+              <li>Inhalatieletsel (roet in mond/neus, verbrand neushaar)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 06 -->
+    <div class="so-block" id="so06">
+      <div class="so-header">
+        <span class="so-num">O 06</span>
+        <h3>Convulsies bij Volwassene</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: convulsies of post-ictale toestand. Ernstig: status epilepticus, niet terugkeren bewustzijn, schedeltrauma</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>ABC, CPR indien nodig</li>
+              <li>NIETS in de mond steken tijdens aanval!</li>
+              <li>Patiënt beschermen tegen verwondingen</li>
+              <li>SAMPLE: epilepsie, alcohol, diabetes, CO, CVA, trauma?</li>
+              <li>Bewusteloos: luchtwegmanagement, stabiele zijligging</li>
+              <li>MUG oproepen bij bewusteloosheid of aanhoudende convulsies</li>
+              <li>Glycemie meten</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 Let op</h3>
+            <ul>
+              <li>Status epilepticus = medische noodsituatie</li>
+              <li>Post-ictale fase: verwardheid, slaperigheid, verminderd bewustzijn</li>
+              <li>Denk aan oorzaken: hypoglycemie, CO-vergiftiging, trauma, CVA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 10 -->
+    <div class="so-block" id="so10">
+      <div class="so-header">
+        <span class="so-num">O 10</span>
+        <h3>Hyperthermie</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: hyperthermie door inspanning, intoxicatie of thermische overbelasting. Temp. ≥40°C, droge huid, stopt met zweten</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>ABC, MUG overwegen</li>
+              <li>Uit de hitte brengen, uitkleden</li>
+              <li>Koelen: vochtige doeken, ijs in hals/oksels/liezen (op advies MUG)</li>
+              <li>Bewusteloos: stabiele zijligging</li>
+              <li>Bij convulsies: O06 | Bij coma: O13 | Bij shock: O05</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 Symptomen</h3>
+            <ul>
+              <li>Neurologisch: agitatie, desorientatie, epilepsie, coma</li>
+              <li>Circulatoir: shock met tachycardie</li>
+              <li>Respiratoir: hyperventilatie, desaturatie</li>
+              <li>Huid: droog, droge tong, stop met zweten</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 11 -->
+    <div class="so-block" id="so11">
+      <div class="so-header">
+        <span class="so-num">O 11</span>
+        <h3>Hypoglycemie</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: diabetespatiënt, malaise met zweten/bleekheid, bewustzijnsstoornissen of coma van onbekende oorsprong</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>ABC + capillaire glycemie meten</li>
+              <li>Glycemie &lt;60 mg/dl zonder bewustzijnsstoornissen: cola + suiker + brood, behandelende arts contacteren</li>
+              <li>Glycemie &lt;60 mg/dl met stoornissen: MUG oproepen</li>
+              <li>Bewusteloos: luchtwegmanagement + stabiele zijligging + MUG</li>
+              <li>NOOIT suiker per os bij bewusteloze!</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>⚠️ Let op</h3>
+            <ul>
+              <li>Hypoglycemie kan imiteren: dronkenschap, CVA, epilepsie</li>
+              <li>Altijd glycemie meten bij bewustzijnsstoornissen onbekende oorzaak</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 12 -->
+    <div class="so-block" id="so12">
+      <div class="so-header">
+        <span class="so-num">O 12</span>
+        <h3>Hypothermie</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: lichaamstemperatuur &lt;35°C</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Uiterst voorzichtige mobilisatie!</li>
+              <li>Natte kleding verwijderen, afdrogen</li>
+              <li>Isothermische deken (passieve opwarming)</li>
+              <li>MUG oproepen</li>
+              <li>T &gt;32°C: passieve opwarming, observatie</li>
+              <li>28–32°C: minimale mobilisatie, horizontaal vervoer</li>
+              <li>&lt;28°C: actieve opwarming (instructies MUG), CPR bij hartstilstand</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>⚠️ Bijzonder</h3>
+            <ul>
+              <li>Niet te vroeg stoppen met CPR – "Niemand is dood tot hij warm en dood is"</li>
+              <li>Denk aan verdrinking, trauma, drugs als oorzaak</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 13 -->
+    <div class="so-block" id="so13">
+      <div class="so-header">
+        <span class="so-num">O 13</span>
+        <h3>Verminderde Bewustzijnstoestand</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: bewustzijnsverandering (niet door CO, hypoglycemie of hypoxie – zie resp. O16, O11, O14)</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen (WAPA-geleid)</h3>
+            <ul>
+              <li>ABC, CPR indien nodig</li>
+              <li>Bewusteloos: luchtwegmanagement</li>
+              <li>Ademhaling aanwezig: stabiele zijligging</li>
+              <li>MUG oproepen</li>
+              <li>Glycemie meten (als &lt;60 mg/dl → O11)</li>
+              <li>O₂ tot SpO₂ 94–98% (COPD: 88–92%)</li>
+            </ul>
+          </div>
+          <div class="card blue">
+            <h3>📊 GCS + WAPA beslissingstabel</h3>
+            <ul>
+              <li><strong>W (Wakker):</strong> Vervoer naar ziekenhuis</li>
+              <li><strong>A (Aanspreekbaar):</strong> Overweeg MUG afhankelijk van symptomen</li>
+              <li><strong>P (Pijnreactief):</strong> MUG oproepen</li>
+              <li><strong>A (Areactief):</strong> MUG oproepen + luchtwegmanagement + intubatie overwegen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 14 -->
+    <div class="so-block" id="so14">
+      <div class="so-header">
+        <span class="so-num">O 14</span>
+        <h3>Acute Respiratoire Insufficiëntie bij Volwassene</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: ademhalingsmoeilijkheden (freq. &gt;30/min, cyanose, stridor, obstructie, intrekking thorax, overmatig zweten)</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Halfzittende of zittende houding</li>
+              <li>Loszittende tandprotheses verwijderen</li>
+              <li>Luchtwegen controleren op vreemde voorwerpen</li>
+              <li>100% O₂ toedienen</li>
+              <li>MUG overwegen</li>
+              <li>Aerosoltherapie op mondeling voorschrift MUG/arts ter plaatse</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 Ernstige tekenen</h3>
+            <ul>
+              <li>Tachypneu, moeite om zin af te maken</li>
+              <li>Cyanose, agitatie</li>
+              <li>Apneu → beademen met ballon (P03)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 16 -->
+    <div class="so-block" id="so16">
+      <div class="so-header">
+        <span class="so-num">O 16</span>
+        <h3>CO-intoxicatie en Brandrook</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: tekenen van CO-intoxicatie of geëvacueerd uit brand</p>
+        <div class="so-grid">
+          <div class="card red">
+            <h3>🔴 Herkennen + Let op</h3>
+            <ul>
+              <li>CO is kleurloos, geurloos en DODELIJK</li>
+              <li>SpO₂-meter geeft VALS normale waarden bij CO!</li>
+              <li>Roet in mond/neus, verbrand neushaar = inhalatieletsel</li>
+              <li>Denk aan CO bij: familiale/collectieve malaise (ook huisdieren!), hoofdpijn, misselijkheid</li>
+              <li>CO-detector altijd dragen!</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Veiligheid: evacueer iedereen uit gebouw</li>
+              <li>ABC evalueren</li>
+              <li>MUG bij: agitatie, bewustzijnsverlies, vitale aantasting, roet, verbrand gelaat</li>
+              <li>O₂ via non-rebreathing masker (15 l/min)</li>
+              <li>Bewusteloos: luchtwegmanagement, stabiele zijligging</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 17 -->
+    <div class="so-block" id="so17">
+      <div class="so-header">
+        <span class="so-num">O 17</span>
+        <h3>Verdrinking</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: immersie (hoofd boven water) of submersie (hoofd onder water)</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Veiligheid team eerst!</li>
+              <li>Altijd horizontaal evacueren</li>
+              <li>Vermoeden wervelletsel bij ondiepe-water duik: vrijwaar as hoofd-hals-lichaam</li>
+              <li>ABC + CPR indien nodig</li>
+              <li>Kleding uit, afdrogen, isothermische deken</li>
+              <li>MUG oproepen</li>
+              <li>Elke (bijna-)verdrinkingspatiënt naar ziekenhuis, ook asymptomatisch!</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>⚠️ Let op</h3>
+            <ul>
+              <li>Elke drenkeling in ondiep water: wervelletsel + onderkoeld vermoeden</li>
+              <li>Meerdere slachtoffers? Triage uitvoeren</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 18 -->
+    <div class="so-block" id="so18">
+      <div class="so-header">
+        <span class="so-num">O 18</span>
+        <h3>Zwaar Ongeval / Collectieve Noodsituatie / MIP</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: ≥5 zwaargewonden, ≥10 gewonden onbekende ernst, of ≥20 personen in gevaar</p>
+        <div class="so-grid">
+          <div class="card orange">
+            <h3>🚨 Organisatie MIP</h3>
+            <ul>
+              <li>Uitruk: 3 MUG + 5 ambulances + SIM</li>
+              <li>START-triage: T1 (rood), T2 (geel), T3 (groen), T0 (zwart)</li>
+              <li>Gekleurde METTAG-stickers op slachtoffers</li>
+              <li>VMP = Verzamelpunt Medische Post</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>✅ Gedrag ambulancier</h3>
+            <ul>
+              <li>Aanrijroute + PEB opvragen</li>
+              <li>Orders Dir-Med opvolgen</li>
+              <li>Rampgespreksgroep – minimale communicatie</li>
+              <li>Organisatie vóór actie</li>
+              <li>Veiligheid team altijd primair</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 20 -->
+    <div class="so-block" id="so20">
+      <div class="so-header">
+        <span class="so-num">O 20–22</span>
+        <h3>CPR bij Volwassene (Hart- en Ademstilstand)</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: volwassene met hart- en ademstilstand</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Protocol CPR</h3>
+            <ul>
+              <li>Veiligheid controleren</li>
+              <li>ABC evalueren, patiënt in rugligging op harde vlakke ondergrond</li>
+              <li>MUG oproepen</li>
+              <li>CPR starten: 30 compressies + 2 beademingen</li>
+              <li>Luchtwegmanagement (canule, masker)</li>
+              <li>O₂ toedienen</li>
+              <li>AED zo snel mogelijk aanleggen en instructies volgen</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>⚡ AED</h3>
+            <ul>
+              <li>Schakel in → volg de gesproken instructies</li>
+              <li>Elektroden plaatsen: rechts onder sleutelbeen + links zij</li>
+              <li>Niemand aanraken tijdens analyse en schok</li>
+              <li>Onmiddellijk CPR hervatten na schok</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 24 -->
+    <div class="so-block" id="so24">
+      <div class="so-header">
+        <span class="so-num">O 24</span>
+        <h3>Pijn op de Borst – Acuut Coronair Syndroom</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: pijn op de borst mogelijks door kransslagaderaandoening</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>ABC, SAMPLE + PQRST</li>
+              <li>Halfzittende houding, geruststellen</li>
+              <li>O₂ tot SpO₂ 94–98%</li>
+              <li>Bloeddruk meten aan BEIDE armen</li>
+              <li>MUG oproepen – altijd!</li>
+              <li>Bij ritmestoornis: O28</li>
+              <li>Bij daling cardiorespiratoire functie: CPR</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>📊 PQRST-evaluatie pijn</h3>
+            <ul>
+              <li><strong>P</strong>rovocatie: wat maakt het erger/beter?</li>
+              <li><strong>Q</strong>ualiteit: drukkend, stekend, brandend?</li>
+              <li><strong>R</strong>egion: uitstraling naar arm, kaak, rug?</li>
+              <li><strong>S</strong>everity: score 0–10</li>
+              <li><strong>T</strong>ime: wanneer begonnen, constant of wisselend?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 26 -->
+    <div class="so-block" id="so26">
+      <div class="so-header">
+        <span class="so-num">O 26</span>
+        <h3>Amputatie, Verplettering, Verminking</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: traumatische amputatie, verplettering of verminking van ledematen</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>Veiligheid! (brandweer afwachten indien gevaar)</li>
+              <li>ABC + CPR indien nodig</li>
+              <li>Bloedingen stelpen: directe druk → indirecte druk → knevel (tijdstip noteren!)</li>
+              <li>Geamputeerd deel meenemen (steriel + koel)</li>
+              <li>MUG oproepen</li>
+              <li>Immobiliseren na pijnstilling door MUG</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>⚠️ Bewaring amputatiedeel</h3>
+            <ul>
+              <li>Steriel inpakken (plastic zak)</li>
+              <li>Plastic zak in recipiënt met 1/3 ijs + 2/3 water</li>
+              <li>NIET direct op ijs (vriesproblemen)</li>
+              <li>Altijd meenemen naar het ziekenhuis!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 27 -->
+    <div class="so-block" id="so27">
+      <div class="so-header">
+        <span class="so-num">O 27</span>
+        <h3>Open Breuk</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: patiënt met open breuk</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>ABC + CPR indien nodig</li>
+              <li>Bloedingen stelpen (directe/indirecte druk, knevel)</li>
+              <li>Wonde steriel afdekken – NIET reponeren</li>
+              <li>MUG oproepen</li>
+              <li>Immobiliseren met spalk of vacuümmatras na pijnstilling</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 Let op</h3>
+            <ul>
+              <li>Nooit bot terug duwen in de wonde</li>
+              <li>Infuusmateriaal klaarzetten voor MUG</li>
+              <li>Shocktekenen bewaken</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 28 -->
+    <div class="so-block" id="so28">
+      <div class="so-header">
+        <span class="so-num">O 28</span>
+        <h3>Ritmestoornissen</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: hartfrequentie &lt;50/min of &gt;150/min, slecht verdragen (ABC instabiel)</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>ABC, CPR indien nodig</li>
+              <li>MUG oproepen – altijd!</li>
+              <li>O₂ tot SpO₂ &gt;94%</li>
+              <li>Bewusteloos: luchtwegmanagement</li>
+              <li>Info: hartkloppingen, tijdstip, duur, thoracale pijn, dyspneu, medicatie</li>
+            </ul>
+          </div>
+          <div class="card red">
+            <h3>🔴 Gevaarlijk</h3>
+            <ul>
+              <li>VF/VT: onmiddellijk AED</li>
+              <li>Bradycardie &lt;50/min + bewusteloosheid: CPR + AED</li>
+              <li>Monitoring (ECG) klaarzetten voor MUG</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO 29 -->
+    <div class="so-block" id="so29">
+      <div class="so-header">
+        <span class="so-num">O 29</span>
+        <h3>CVA – Cerebrovasculair Accident / Beroerte</h3>
+      </div>
+      <div class="so-body">
+        <p class="voor">Voor gebruik bij: spraakstoornis, verminderde kracht/gevoel, plots opgetreden</p>
+        <div class="so-grid">
+          <div class="card green">
+            <h3>✅ Handelen</h3>
+            <ul>
+              <li>ABC + FAST-test uitvoeren</li>
+              <li>Tijdstip symptomen noteren (Golden Hour!)</li>
+              <li>Glycemie meten (uitsluiten hypoglycemie)</li>
+              <li>O₂ tot SpO₂ &gt;94%, halfzittende houding</li>
+              <li>ABC stabiel + FAST positief: ZIEKENHUIS ONMIDDELLIJK VERWITTIGEN</li>
+              <li>ABC instabiel: MUG oproepen</li>
+            </ul>
+          </div>
+          <div class="card orange">
+            <h3>⏱️ Tijdskritisch!</h3>
+            <ul>
+              <li>"Time is brain" – elke minuut telt</li>
+              <li>Ziekenhuis verwittigen zodat CT klaarstaat</li>
+              <li>Thrombolyse mogelijk enkel binnen tijdvenster (&lt;4,5u)</li>
+              <li>Geen bloeddrukbeheer door ambulancier</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- .content -->
+</div><!-- #main -->
+
+<script>
+// Smooth scroll & active nav
+document.querySelectorAll('#nav-list a').forEach(a => {
+  a.addEventListener('click', e => {
+    document.querySelectorAll('#nav-list a').forEach(x => x.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+// Simple nav filter
+function filterNav(q) {
+  const links = document.querySelectorAll('#nav-list a');
+  links.forEach(a => {
+    a.style.display = a.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-section-title').forEach(t => t.style.display = q ? 'none' : '');
+}
+
+// Highlight active section on scroll
+const sections = document.querySelectorAll('[id^="hfst"], [id^="so"]');
+const navLinks = document.querySelectorAll('#nav-list a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+
+</body>
+</html>
