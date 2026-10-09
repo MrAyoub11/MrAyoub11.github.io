@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIVO 2026 – Hulpmiddelen</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#e63946">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --border: #2e3350;
+  --accent: #e63946;
+  --accent2: #457b9d;
+  --green: #2dc653;
+  --orange: #f4a261;
+  --yellow: #ffd166;
+  --text: #e8eaf0;
+  --muted: #8891b0;
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; padding-bottom: 80px; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 200;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom-nav a {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  padding: 10px 4px 8px;
+  text-decoration: none; color: var(--muted);
+  font-size: 0.65rem; font-weight: 600; gap: 4px;
+  transition: color 0.15s;
+}
+.bottom-nav a .icon { font-size: 1.3rem; }
+.bottom-nav a.active { color: var(--accent); }
+.bottom-nav a:hover { color: var(--text); }
+
+/* ── HEADER ── */
+.page-header {
+  background: linear-gradient(160deg, var(--surface) 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 20px 24px;
+  text-align: center;
+}
+.page-header h1 { font-size: 1.5rem; font-weight: 800; }
+.page-header h1 span { color: var(--accent); }
+.page-header p { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+
+/* ── TABS ── */
+.tabs {
+  display: flex; overflow-x: auto; gap: 8px;
+  padding: 16px 16px 0;
+  max-width: 900px; margin: 0 auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+}
+.tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tab-btn:hover:not(.active) { border-color: var(--muted); color: var(--text); }
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; max-width: 900px; margin: 0 auto; padding: 20px 16px; }
+.tab-panel.active { display: block; }
+
+/* ── SECTION TITLE ── */
+.sec-title {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px; margin: 24px 0 14px;
+}
+.sec-title:first-child { margin-top: 0; }
+
+/* ── CARDS ── */
+.box {
+  background: var(--surface2); border-radius: 12px;
+  padding: 16px 18px; border: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.box h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+.box.red { border-left: 3px solid var(--accent); }
+.box.green { border-left: 3px solid var(--green); }
+.box.orange { border-left: 3px solid var(--orange); }
+.box.blue { border-left: 3px solid var(--accent2); }
+.box.red h3 { color: #ff6b7a; }
+.box.green h3 { color: #5de88a; }
+.box.orange h3 { color: var(--orange); }
+.box.blue h3 { color: #7ab8d4; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ── ABCDE CHECKLIST ── */
+.checklist-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+  cursor: pointer; transition: all 0.2s; user-select: none;
+}
+.checklist-item.done {
+  opacity: 0.55;
+  background: var(--surface2);
+}
+.checklist-item.done .item-title { text-decoration: line-through; color: var(--muted); }
+.check-circle {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.2s;
+  background: var(--surface2);
+}
+.checklist-item.done .check-circle { background: var(--green); border-color: var(--green); }
+.item-letter {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 800; flex-shrink: 0;
+}
+.item-content { flex: 1; }
+.item-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+.item-sub { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.item-notes { margin-top: 8px; }
+.item-notes input {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 10px; color: var(--text);
+  font-size: 0.8rem; outline: none;
+}
+.item-notes input:focus { border-color: var(--accent2); }
+.checklist-actions {
+  display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.btn {
+  padding: 9px 18px; border-radius: 50px; border: 1px solid var(--border);
+  background: var(--surface2); color: var(--text);
+  font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+}
+.btn:hover { background: var(--surface); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { opacity: 0.85; }
+.progress-bar-wrap { background: var(--surface2); border-radius: 50px; height: 6px; margin-bottom: 20px; }
+.progress-bar { height: 6px; border-radius: 50px; background: var(--green); transition: width 0.3s; }
+
+/* ── SAMPLE / OPQRST ── */
+.form-group { margin-bottom: 14px; }
+.form-label {
+  display: block; font-size: 0.75rem; font-weight: 700;
+  color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.form-label span { color: var(--accent); margin-right: 4px; }
+.form-input, .form-textarea {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px; color: var(--text);
+  font-size: 0.88rem; outline: none; font-family: inherit;
+  transition: border 0.2s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--accent2); }
+.form-textarea { resize: vertical; min-height: 70px; }
+.form-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.form-preview {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 18px; margin-top: 16px;
+  font-size: 0.83rem; line-height: 1.8; color: #c5c9dc;
+  display: none;
+}
+.form-preview.visible { display: block; }
+.form-preview strong { color: var(--accent); }
+
+/* ── VITALE NORMEN ── */
+.vitals-table { width: 100%; border-collapse: collapse; }
+.vitals-table th {
+  background: var(--border); padding: 10px 12px;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; text-align: left; color: var(--text);
+}
+.vitals-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  font-size: 0.82rem; color: #c5c9dc; vertical-align: middle;
+}
+.vitals-table tr:last-child td { border-bottom: none; }
+.vitals-table tr:nth-child(even) td { background: rgba(255,255,255,0.025); }
+.vitals-table .age-group { font-weight: 700; color: var(--text); }
+.tbl-wrap { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+@media (max-width: 600px) { .tbl-wrap { overflow-x: auto; } .vitals-table { min-width: 520px; } }
+
+.normal { color: #5de88a; font-weight: 600; }
+.warning { color: var(--yellow); font-weight: 600; }
+
+/* ── HOUDINGEN ── */
+.houding-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.houding-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
+.houding-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.houding-when { font-size: 0.78rem; color: var(--accent2); margin-bottom: 4px; font-weight: 600; }
+.houding-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.houding-not { font-size: 0.75rem; color: #ff8a94; margin-top: 4px; }
+
+/* ── AFKORTINGEN ── */
+.afk-search-wrap { position: relative; margin-bottom: 16px; }
+.afk-search-wrap input {
+  width: 100%; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 50px; padding: 10px 16px 10px 40px; color: var(--text);
+  font-size: 0.88rem; outline: none; transition: border 0.2s;
+}
+.afk-search-wrap input:focus { border-color: var(--accent2); }
+.afk-search-wrap::before { content: "🔍"; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); }
+.afk-list { list-style: none; }
+.afk-item {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 0.83rem;
+}
+.afk-item:last-child { border-bottom: none; }
+.afk-code { font-weight: 800; color: var(--accent); min-width: 70px; flex-shrink: 0; font-size: 0.85rem; }
+.afk-def { color: #c5c9dc; line-height: 1.5; }
+.afk-item.hidden { display: none; }
+
+/* ── FONT SIZE ── */
+.font-controls {
+  display: flex; align-items: center; gap: 8px;
+  position: fixed; bottom: 68px; right: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 50px; padding: 4px 8px; z-index: 150;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.font-btn {
+  background: none; border: none; color: var(--muted);
+  cursor: pointer; font-size: 1rem; padding: 4px 6px;
+  border-radius: 6px; transition: color 0.15s;
+  line-height: 1;
+}
+.font-btn:hover { color: var(--text); background: var(--surface2); }
+
+/* ── SEARCH PAGE ── */
+.search-result {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+  text-decoration: none; display: block; transition: border-color 0.15s;
+}
+.search-result:hover { border-color: var(--accent2); }
+.search-result .r-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.search-result .r-source { font-size: 0.72rem; color: var(--accent); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.search-result .r-excerpt { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.search-result mark { background: rgba(230,57,70,0.3); color: var(--text); border-radius: 2px; }
+.search-empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 0.88rem; }
+.main-search-wrap { position: relative; margin: 16px 16px 0; max-width: 900px; margin-left: auto; margin-right: auto; }
+.main-search-wrap input {
+  width: 100%; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 50px; padding: 12px 20px 12px 46px; color: var(--text);
+  font-size: 0.95rem; outline: none; transition: border 0.2s;
+}
+.main-search-wrap input:focus { border-color: var(--accent2); }
+.main-search-wrap::before { content: "🔍"; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>🚑 PIVO <span>2026</span></h1>
+  <p>Hulpmiddelen · Referentie · Checklists</p>
+</div>
+
+<div class="tabs" id="tabBar">
+  <button class="tab-btn active" onclick="switchTab('tools')">🛠️ Tools</button>
+  <button class="tab-btn" onclick="switchTab('abcde')">✅ ABCDE</button>
+  <button class="tab-btn" onclick="switchTab('sample')">📋 SAMPLE</button>
+  <button class="tab-btn" onclick="switchTab('vitals')">💓 Vitale normen</button>
+  <button class="tab-btn" onclick="switchTab('houdingen')">🧍 Houdingen</button>
+  <button class="tab-btn" onclick="switchTab('afk')">📖 Afkortingen</button>
+  <button class="tab-btn" onclick="switchTab('zoeken')">🔍 Zoeken</button>
+  <button class="tab-btn" onclick="switchTab('mug')">🚁 MUG</button>
+</div>
+
+<!-- ════════════════════════════════════ TOOLS OVERVIEW ════════════════════════════════════ -->
+<div class="tab-panel active" id="panel-tools">
+  <div class="sec-title">Snelkoppelingen</div>
+  <div class="two-col">
+    <a href="staande-orders.html" style="text-decoration:none">
+      <div class="box red" style="cursor:pointer">
+        <h3>🚨 Staande Orders</h3>
+        <p style="font-size:0.8rem;color:var(--muted)">Protocollen O01–O29</p>
+      </div>
+    </a>
+    <a href="PIVO-Cursus-Samenvatting.html" style="text-decoration:none">
+      <div class="box blue" style="cursor:pointer">
+        <h3>📚 Samenvatting</h3>
+        <p style="font-size:0.8rem;color:var(--muted)">Hoofdstukken 1–13</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="sec-title">Checklists & Tools</div>
+  <div class="two-col">
+    <div class="box green" style="cursor:pointer" onclick="switchTab('abcde')">
+      <h3>✅ ABCDE Checklist</h3>
+      <p style="font-size:0.8rem;color:var(--muted)">Stap-voor-stap bij interventie</p>
+    </div>
+    <div class="box orange" style="cursor:pointer" onclick="switchTab('sample')">
+      <h3>📋 SAMPLE / OPQRST</h3>
+      <p style="font-size:0.8rem;color:var(--muted)">Anamnese invullen</p>
+    </div>
+    <div class="box blue" style="cursor:pointer" onclick="switchTab('vitals')">
+      <h3>💓 Vitale normen</h3>
+      <p style="font-size:0.8rem;color:var(--muted)">Per leeftijdsgroep</p>
+    </div>
+    <div class="box" style="cursor:pointer" onclick="switchTab('houdingen')">
+      <h3>🧍 Houdingen</h3>
+      <p style="font-size:0.8rem;color:var(--muted)">Welke houding wanneer</p>
+    </div>
+  </div>
+
+  <div class="sec-title">Snelreferentie</div>
+  <div class="box">
+    <h3>⚡ ABC herinnering</h3>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+      <div style="flex:1;min-width:120px;background:var(--surface);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--accent)">A</div>
+        <div style="font-size:0.72rem;color:var(--muted)">Ademweg vrij?</div>
+        <div style="font-size:0.78rem;margin-top:4px">Hoofd kantelen<br>Kin heffen</div>
+      </div>
+      <div style="flex:1;min-width:120px;background:var(--surface);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:#7ab8d4">B</div>
+        <div style="font-size:0.72rem;color:var(--muted)">Ademt de patiënt?</div>
+        <div style="font-size:0.78rem;margin-top:4px">Kijk – Luister<br>Voel (10 sec)</div>
+      </div>
+      <div style="flex:1;min-width:120px;background:var(--surface);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:1.5rem;font-weight:800;color:#5de88a">C</div>
+        <div style="font-size:0.72rem;color:var(--muted)">Circulatie?</div>
+        <div style="font-size:0.78rem;margin-top:4px">Pols halsslagader<br>Bloedingen</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box red" style="margin-top:12px">
+    <h3>🫀 CPR snel</h3>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:0.83rem">
+      <div><span style="color:var(--accent);font-weight:700">30:2</span><br><span style="color:var(--muted)">Compressies:beademing</span></div>
+      <div><span style="color:var(--accent);font-weight:700">5–6 cm</span><br><span style="color:var(--muted)">Diepte</span></div>
+      <div><span style="color:var(--accent);font-weight:700">100–120</span><br><span style="color:var(--muted)">Per minuut</span></div>
+      <div><span style="color:var(--accent);font-weight:700">AED</span><br><span style="color:var(--muted)">Zo snel mogelijk</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ ABCDE ════════════════════════════════════ -->
+<div class="tab-panel" id="panel-abcde">
+  <div class="checklist-actions">
+    <button class="btn primary" onclick="resetChecklist()">🔄 Nieuwe interventie</button>
+    <button class="btn" onclick="checkAll()">✅ Alles OK</button>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+
+  <div id="checklistItems">
+    <div class="checklist-item" onclick="toggleCheck(this)" data-id="veiligheid">
+      <div class="check-circle" data-check="veiligheid">☐</div>
+      <div class="item-letter" style="background:rgba(230,57,70,0.2);color:var(--accent)">🛡️</div>
+      <div class="item-content">
+        <div class="item-title">Veiligheid</div>
+        <div class="item-sub">Gevaar voor jezelf, patiënt, omstanders? Handschoenen aan. Brand / gas / elektriciteit?</div>
+        <div class="item-notes"><input type="text" placeholder="Notitie..." onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)" data-id="a">
+      <div class="check-circle">☐</div>
+      <div class="item-letter" style="background:rgba(230,57,70,0.2);color:var(--accent)">A</div>
+      <div class="item-content">
+        <div class="item-title">Ademweg</div>
+        <div class="item-sub">Vrij? Aanspreken → bewustzijn check. Hoofd kantelen + kin heffen. Bij nekletsel: kaak-duw.</div>
+        <div class="item-notes"><input type="text" placeholder="WAPA score..." onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)" data-id="b">
+      <div class="check-circle">☐</div>
+      <div class="item-letter" style="background:rgba(69,123,157,0.2);color:#7ab8d4">B</div>
+      <div class="item-content">
+        <div class="item-title">Breathing (Ademhaling)</div>
+        <div class="item-sub">Kijk – Luister – Voel (10 sec). Freq.? Normaal: 12–20/min. SpO₂ meten. O₂ toedienen indien nodig.</div>
+        <div class="item-notes"><input type="text" placeholder="Freq. en SpO₂..." onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)" data-id="c">
+      <div class="check-circle">☐</div>
+      <div class="item-letter" style="background:rgba(45,198,83,0.2);color:#5de88a">C</div>
+      <div class="item-content">
+        <div class="item-title">Circulatie</div>
+        <div class="item-sub">Hartslag halsslagader. Bloedingen stelpen. Bloeddruk beide armen. Shocktekenen?</div>
+        <div class="item-notes"><input type="text" placeholder="Hartslag / BD..." onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)" data-id="d">
+      <div class="check-circle">☐</div>
+      <div class="item-letter" style="background:rgba(255,209,102,0.2);color:var(--yellow)">D</div>
+      <div class="item-content">
+        <div class="item-title">Disability (Neurologie)</div>
+        <div class="item-sub">WAPA / GCS. Pupillen (gelijk? reactief?). Glycemie meten. Houding patiënt.</div>
+        <div class="item-notes"><input type="text" placeholder="GCS / WAPA..." onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)" data-id="e">
+      <div class="check-circle">☐</div>
+      <div class="item-letter" style="background:rgba(244,162,97,0.2);color:var(--orange)">E</div>
+      <div class="item-content">
+        <div class="item-title">Exposure (Ontbloting)</div>
+        <div class="item-sub">Volledig onderzoeken. Hoofd tot voeten. Verborgen letsels? Temperatuur meten. Hypothermie voorkomen.</div>
+        <div class="item-notes"><input type="text" placeholder="Bevindingen..." onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)" data-id="vervoer">
+      <div class="check-circle">☐</div>
+      <div class="item-letter" style="background:rgba(255,255,255,0.05);color:var(--muted)">🚑</div>
+      <div class="item-content">
+        <div class="item-title">Vervoer + melding</div>
+        <div class="item-sub">HC 112 melden. Ziekenhuis verwittigen. Instabiel? MUG oproepen. Patiënt monitoren onderweg.</div>
+        <div class="item-notes"><input type="text" placeholder="Bestemming / bijzonderheden..." onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" style="margin-top:28px">MUG oproepen bij</div>
+  <div class="box red">
+    <ul style="list-style:none;padding:0">
+      <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0 4px 14px;position:relative;border-bottom:1px solid var(--border)"><span style="position:absolute;left:0;color:var(--accent)">›</span>WAPA = Pijnreactief of Areactief</li>
+      <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0 4px 14px;position:relative;border-bottom:1px solid var(--border)"><span style="position:absolute;left:0;color:var(--accent)">›</span>Geen normale ademhaling → CPR</li>
+      <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0 4px 14px;position:relative;border-bottom:1px solid var(--border)"><span style="position:absolute;left:0;color:var(--accent)">›</span>Tekenen van shock</li>
+      <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0 4px 14px;position:relative;border-bottom:1px solid var(--border)"><span style="position:absolute;left:0;color:var(--accent)">›</span>Hevige pijn (&gt;7/10)</li>
+      <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0 4px 14px;position:relative"><span style="position:absolute;left:0;color:var(--accent)">›</span>Zwangerschap complicaties</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ SAMPLE ════════════════════════════════════ -->
+<div class="tab-panel" id="panel-sample">
+  <div id="sampleForm">
+    <div class="sec-title">SAMPLE – Anamnese</div>
+    <div class="form-group">
+      <label class="form-label"><span>S</span>ymptomen</label>
+      <textarea class="form-textarea" id="s_symptomen" placeholder="Wat voelt de patiënt? Hoofdklacht?"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>A</span>llergieën</label>
+      <input class="form-input" id="s_allergies" placeholder="Bekende allergieën voor medicatie?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>M</span>edicatie</label>
+      <input class="form-input" id="s_meds" placeholder="Welke geneesmiddelen neemt de patiënt?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>P</span>atient history</label>
+      <input class="form-input" id="s_history" placeholder="Medische voorgeschiedenis?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>L</span>aatste maaltijd</label>
+      <input class="form-input" id="s_last" placeholder="Wanneer gegeten / gedronken?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>E</span>vents</label>
+      <textarea class="form-textarea" id="s_events" placeholder="Wat is er precies gebeurd? Hoe begon het?"></textarea>
+    </div>
+
+    <div class="sec-title">OPQRST – Pijnanamnese</div>
+    <div class="form-group">
+      <label class="form-label"><span>O</span>nset (begin)</label>
+      <input class="form-input" id="o_onset" placeholder="Wanneer begonnen? Plotseling of geleidelijk?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>P</span>rovocatie / Palliatie</label>
+      <input class="form-input" id="o_prov" placeholder="Wat maakt het erger of beter?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>Q</span>ualiteit</label>
+      <input class="form-input" id="o_qual" placeholder="Drukkend / stekend / brandend / toesnoerend?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>R</span>egion / Uitstraling</label>
+      <input class="form-input" id="o_region" placeholder="Waar precies? Straalt uit naar...?">
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>S</span>everity (ernst)</label>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+        <input type="range" id="o_score" min="0" max="10" value="0" style="flex:1;accent-color:var(--accent)" oninput="document.getElementById('scoreVal').textContent=this.value">
+        <span id="scoreVal" style="font-size:1.4rem;font-weight:800;color:var(--accent);min-width:28px;text-align:center">0</span>
+        <span style="font-size:0.75rem;color:var(--muted)">/10</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label"><span>T</span>ime</label>
+      <input class="form-input" id="o_time" placeholder="Hoe lang al? Constant of wisselend?">
+    </div>
+
+    <div class="form-actions">
+      <button class="btn primary" onclick="generateBilan()">📋 Genereer bilan</button>
+      <button class="btn" onclick="clearSample()">🗑️ Wis alles</button>
+    </div>
+    <div class="form-preview" id="bilanPreview"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ VITALE NORMEN ════════════════════════════════════ -->
+<div class="tab-panel" id="panel-vitals">
+  <div class="sec-title">Hartslag (slagen/min)</div>
+  <div class="tbl-wrap">
+    <table class="vitals-table">
+      <thead><tr><th>Leeftijdsgroep</th><th>Normaal</th><th>Bradycardie</th><th>Tachycardie</th></tr></thead>
+      <tbody>
+        <tr><td class="age-group">👶 Zuigeling (&lt;1j)</td><td class="normal">100–160</td><td class="warning">&lt;100</td><td class="warning">&gt;160</td></tr>
+        <tr><td class="age-group">🧒 Kind (1–8j)</td><td class="normal">80–120</td><td class="warning">&lt;80</td><td class="warning">&gt;120</td></tr>
+        <tr><td class="age-group">🧑 Jongere (8–12j)</td><td class="normal">70–110</td><td class="warning">&lt;70</td><td class="warning">&gt;110</td></tr>
+        <tr><td class="age-group">🧑 Adolescent (12–18j)</td><td class="normal">60–100</td><td class="warning">&lt;60</td><td class="warning">&gt;100</td></tr>
+        <tr><td class="age-group">🧑 Volwassene</td><td class="normal">60–100</td><td class="warning">&lt;60</td><td class="warning">&gt;100</td></tr>
+        <tr><td class="age-group">👴 Bejaarde (&gt;65j)</td><td class="normal">60–100</td><td class="warning">&lt;60</td><td class="warning">&gt;100</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-title">Ademfrequentie (ademh./min)</div>
+  <div class="tbl-wrap">
+    <table class="vitals-table">
+      <thead><tr><th>Leeftijdsgroep</th><th>Normaal</th><th>Te traag</th><th>Te snel</th></tr></thead>
+      <tbody>
+        <tr><td class="age-group">👶 Zuigeling (&lt;1j)</td><td class="normal">30–40</td><td class="warning">&lt;25</td><td class="warning">&gt;60</td></tr>
+        <tr><td class="age-group">🧒 Kind (1–5j)</td><td class="normal">25–35</td><td class="warning">&lt;20</td><td class="warning">&gt;40</td></tr>
+        <tr><td class="age-group">🧑 Kind (5–12j)</td><td class="normal">20–30</td><td class="warning">&lt;15</td><td class="warning">&gt;30</td></tr>
+        <tr><td class="age-group">🧑 Volwassene</td><td class="normal">12–20</td><td class="warning">&lt;10</td><td class="warning">&gt;20</td></tr>
+        <tr><td class="age-group">👴 Bejaarde (&gt;65j)</td><td class="normal">12–20</td><td class="warning">&lt;10</td><td class="warning">&gt;25</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-title">Bloeddruk – systolisch (mmHg)</div>
+  <div class="tbl-wrap">
+    <table class="vitals-table">
+      <thead><tr><th>Leeftijdsgroep</th><th>Normaal</th><th>Laag (shock)</th><th>Hoog</th></tr></thead>
+      <tbody>
+        <tr><td class="age-group">👶 Zuigeling (&lt;1j)</td><td class="normal">70–90</td><td class="warning">&lt;60</td><td class="warning">&gt;100</td></tr>
+        <tr><td class="age-group">🧒 Kind (1–5j)</td><td class="normal">80–100</td><td class="warning">&lt;70</td><td class="warning">&gt;110</td></tr>
+        <tr><td class="age-group">🧑 Kind (5–12j)</td><td class="normal">90–110</td><td class="warning">&lt;80</td><td class="warning">&gt;120</td></tr>
+        <tr><td class="age-group">🧑 Volwassene</td><td class="normal">100–140</td><td class="warning">&lt;90</td><td class="warning">&gt;140</td></tr>
+        <tr><td class="age-group">👴 Bejaarde</td><td class="normal">110–150</td><td class="warning">&lt;100</td><td class="warning">&gt;150</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-title">SpO₂ & Temperatuur</div>
+  <div class="two-col">
+    <div class="box green">
+      <h3>🫁 SpO₂ doelen</h3>
+      <ul style="list-style:none;padding:0">
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0;border-bottom:1px solid var(--border)">Normaal: <span class="normal">94–98%</span></li>
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0;border-bottom:1px solid var(--border)">COPD-doel: <span style="color:var(--yellow);font-weight:600">88–92%</span></li>
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0">Kritisch: <span style="color:var(--accent);font-weight:600">&lt;90%</span></li>
+      </ul>
+    </div>
+    <div class="box orange">
+      <h3>🌡️ Temperatuur</h3>
+      <ul style="list-style:none;padding:0">
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0;border-bottom:1px solid var(--border)">Normaal: <span class="normal">36–37.5°C</span></li>
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0;border-bottom:1px solid var(--border)">Koorts: <span style="color:var(--yellow);font-weight:600">&gt;38°C</span></li>
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0;border-bottom:1px solid var(--border)">Hyperthermie: <span style="color:var(--accent);font-weight:600">&gt;40°C</span></li>
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0;border-bottom:1px solid var(--border)">Hypothermie: <span style="color:#7ab8d4;font-weight:600">&lt;35°C</span></li>
+        <li style="font-size:0.82rem;color:#c5c9dc;padding:4px 0">Ernstig: <span style="color:var(--accent);font-weight:600">&lt;28°C</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-title">CPR per leeftijdsgroep</div>
+  <div class="tbl-wrap">
+    <table class="vitals-table">
+      <thead><tr><th>Groep</th><th>Ratio</th><th>Diepte</th><th>Freq.</th><th>Beademing</th></tr></thead>
+      <tbody>
+        <tr><td class="age-group">👶 Zuigeling</td><td>30:2</td><td>4 cm</td><td>100–120/min</td><td>Mond + neus, 5 eerst</td></tr>
+        <tr><td class="age-group">🧒 Kind</td><td>30:2 (15:2 met 2)</td><td>1/3 thorax</td><td>100–120/min</td><td>5 beademing eerst</td></tr>
+        <tr><td class="age-group">🧑 Volwassene</td><td>30:2</td><td>5–6 cm</td><td>100–120/min</td><td>1 sec, borst rijzen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ HOUDINGEN ════════════════════════════════════ -->
+<div class="tab-panel" id="panel-houdingen">
+  <div class="sec-title">Liggings- en zithoudingen</div>
+
+  <div class="houding-card">
+    <div class="houding-icon">🛏️</div>
+    <div>
+      <div class="houding-name">Rugligging (horizontaal)</div>
+      <div class="houding-when">Bij: bewusteloos (ademhaling aanwezig), trauma, shock</div>
+      <div class="houding-desc">Plat op de rug, hoofd in neutrale positie. Benen eventueel licht verheven bij shock (tenzij schedeltrauma of ademhalingsproblemen).</div>
+    </div>
+  </div>
+
+  <div class="houding-card">
+    <div class="houding-icon">🔄</div>
+    <div>
+      <div class="houding-name">Stabiele zijligging</div>
+      <div class="houding-when">Bij: bewusteloze patiënt MET ademhaling, geen wervelletsel vermoeden</div>
+      <div class="houding-desc">Linker of rechter zijde. Bovenste been gebogen, arm onder hoofd. Mond naar beneden gericht (secreties kunnen wegvloeien).</div>
+      <div class="houding-not">⚠️ Niet bij: vermoeden wervelletsel, zwangere vrouwen (voorkeur links), thoraxtrauma</div>
+    </div>
+  </div>
+
+  <div class="houding-card">
+    <div class="houding-icon">🪑</div>
+    <div>
+      <div class="houding-name">Halfzittende houding (Fowler)</div>
+      <div class="houding-when">Bij: ademhalingsmoeilijkheden, pijn op de borst (ACS), bewust en stabiel</div>
+      <div class="houding-desc">30–75° rechtop. Vermindert druk op het diafragma. Verbetert longvolume en O₂-opname.</div>
+      <div class="houding-not">⚠️ Niet bij: shock, hypotensie, bewusteloos</div>
+    </div>
+  </div>
+
+  <div class="houding-card">
+    <div class="houding-icon">⬇️</div>
+    <div>
+      <div class="houding-name">Trendelenburg (hoofd laag)</div>
+      <div class="houding-when">Bij: navelstrengprolaps, obstetrische nood</div>
+      <div class="houding-desc">Lichaam schuin, hoofd lager dan de voeten. Verlicht druk op navelstreng bij prolaps.</div>
+      <div class="houding-not">⚠️ Niet meer bij: shock (geen bewijs van nut), schedeltrauma, ademhalingsproblemen</div>
+    </div>
+  </div>
+
+  <div class="houding-card">
+    <div class="houding-icon">↗️</div>
+    <div>
+      <div class="houding-name">Anti-Trendelenburg (hoofd hoog)</div>
+      <div class="houding-when">Bij: vermoeden schedelhersenletsel, intracraniale drukverhoging</div>
+      <div class="houding-desc">Hoofd iets hoger dan de rest van het lichaam (15–30°). Vermindert hersendruk.</div>
+      <div class="houding-not">⚠️ Niet bij: shock of hypotensie</div>
+    </div>
+  </div>
+
+  <div class="houding-card">
+    <div class="houding-icon">🤰</div>
+    <div>
+      <div class="houding-name">Linkerzijligging (zwangere)</div>
+      <div class="houding-when">Bij: zwangere vrouw (>20 weken), vervoer naar ziekenhuis</div>
+      <div class="houding-desc">Licht op linkerzijde (of onderlaag links omhoog). Voorkomt vena cava compressie door uterus. Verbetert terugvloed naar hart.</div>
+    </div>
+  </div>
+
+  <div class="houding-card">
+    <div class="houding-icon">🦵</div>
+    <div>
+      <div class="houding-name">Benen verheven (shock)</div>
+      <div class="houding-when">Bij: hypovolemische shock, flauwte</div>
+      <div class="houding-desc">Rugligging, benen 20–30° omhoog. Stimuleert veneuze terugvloed naar hart. Combineer met warmhouden.</div>
+      <div class="houding-not">⚠️ Niet bij: schedeltrauma, ademhalingsproblemen, hartfalen, bewusteloos</div>
+    </div>
+  </div>
+
+  <div class="houding-card">
+    <div class="houding-icon">🪑</div>
+    <div>
+      <div class="houding-name">Zittende houding</div>
+      <div class="houding-when">Bij: ernstige dyspnoe, astma, longoedeem</div>
+      <div class="houding-desc">Volledig rechtop, voeten op de grond of op steun. Maximale longexpansie. Patiënt bepaalt zelf comfort.</div>
+    </div>
+  </div>
+
+  <div class="sec-title" style="margin-top:8px">Sneltabel – aandoening → houding</div>
+  <div class="tbl-wrap">
+    <table class="vitals-table">
+      <thead><tr><th>Aandoening</th><th>Houding</th></tr></thead>
+      <tbody>
+        <tr><td>Pijn op de borst (ACS)</td><td class="normal">Halfzittend</td></tr>
+        <tr><td>Beroerte (CVA)</td><td class="normal">Halfzittend</td></tr>
+        <tr><td>Ademhalingsmoeilijkheden</td><td class="normal">Zittend / halfzittend</td></tr>
+        <tr><td>Bewusteloze patiënt (ademt)</td><td class="normal">Stabiele zijligging</td></tr>
+        <tr><td>Shock / flauwte</td><td class="normal">Rugligging + benen omhoog</td></tr>
+        <tr><td>Schedeltrauma</td><td class="normal">Anti-Trendelenburg</td></tr>
+        <tr><td>Navelstrengprolaps</td><td class="normal">Trendelenburg</td></tr>
+        <tr><td>Zwangere &gt;20 wk</td><td class="normal">Linkerzijligging</td></tr>
+        <tr><td>Trauma + wervelvermoeden</td><td class="normal">Rugligging (neutraal)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ AFKORTINGEN ════════════════════════════════════ -->
+<div class="tab-panel" id="panel-afk">
+  <div class="afk-search-wrap">
+    <input type="text" id="afkSearch" placeholder="Zoek afkorting..." oninput="filterAfk(this.value)">
+  </div>
+  <ul class="afk-list" id="afkList">
+    <li class="afk-item"><span class="afk-code">ABC</span><span class="afk-def">Ademweg – Breathing – Circulatie (primaire beoordeling)</span></li>
+    <li class="afk-item"><span class="afk-code">ABCDE</span><span class="afk-def">Ademweg – Breathing – Circulatie – Disability – Exposure (systematische beoordeling)</span></li>
+    <li class="afk-item"><span class="afk-code">ACS</span><span class="afk-def">Acuut Coronair Syndroom (hartaanval e.d.)</span></li>
+    <li class="afk-item"><span class="afk-code">AED</span><span class="afk-def">Automatische Externe Defibrillator</span></li>
+    <li class="afk-item"><span class="afk-code">ASTRID</span><span class="afk-def">All-round Semi-cellular Trunking Radio Infrastructure for Dispatching – Belgisch noodcommunicatienetwerk</span></li>
+    <li class="afk-item"><span class="afk-code">BD</span><span class="afk-def">Bloeddruk</span></li>
+    <li class="afk-item"><span class="afk-code">BVM</span><span class="afk-def">Balloon Valve Mask – ballonklepmasker voor beademing</span></li>
+    <li class="afk-item"><span class="afk-code">COPD</span><span class="afk-def">Chronische Obstructieve Longziekte</span></li>
+    <li class="afk-item"><span class="afk-code">CPR</span><span class="afk-def">Cardiopulmonaire Reanimatie</span></li>
+    <li class="afk-item"><span class="afk-code">CVA</span><span class="afk-def">CerebroVasculair Accident – beroerte</span></li>
+    <li class="afk-item"><span class="afk-code">D1–D5</span><span class="afk-def">De 5 disciplines bij MIP (Brandweer / Geneeskunde / Politie / Logistiek / Overheid)</span></li>
+    <li class="afk-item"><span class="afk-code">DGH</span><span class="afk-def">Dringende Geneeskundige Hulpverlening</span></li>
+    <li class="afk-item"><span class="afk-code">Dir-Med</span><span class="afk-def">Directeur Medisch – medische coördinator bij MIP</span></li>
+    <li class="afk-item"><span class="afk-code">ECG</span><span class="afk-def">ElectroCardioGram</span></li>
+    <li class="afk-item"><span class="afk-code">FAST</span><span class="afk-def">Face – Arm – Speech – Time (screeningstest CVA)</span></li>
+    <li class="afk-item"><span class="afk-code">GCS</span><span class="afk-def">Glasgow Coma Scale – bewustzijnsscore (max 15)</span></li>
+    <li class="afk-item"><span class="afk-code">HC 112</span><span class="afk-def">HulpCentrum 112 – Belgisch noodnummer coördinatiecentrum</span></li>
+    <li class="afk-item"><span class="afk-code">IO</span><span class="afk-def">Intra-Osseaal – injectie via botmerg (als IV niet lukt)</span></li>
+    <li class="afk-item"><span class="afk-code">IV</span><span class="afk-def">Intra-Veneus – rechtstreeks in de ader</span></li>
+    <li class="afk-item"><span class="afk-code">KED</span><span class="afk-def">Kendrick Extrication Device – immobilisatievest voor patiënt uit voertuig halen</span></li>
+    <li class="afk-item"><span class="afk-code">LMA</span><span class="afk-def">Laryngeal Mask Airway – supraglottische luchtweg</span></li>
+    <li class="afk-item"><span class="afk-code">METTAG</span><span class="afk-def">Systeem voor triage-labeling bij meerdere slachtoffers (kleurcodering)</span></li>
+    <li class="afk-item"><span class="afk-code">MILS</span><span class="afk-def">Manual Inline Stabilization – manuele stabilisatie van het hoofd bij vermoeden wervelletsel</span></li>
+    <li class="afk-item"><span class="afk-code">MIP</span><span class="afk-def">Meervoudig Incident Protocol – rampenplan</span></li>
+    <li class="afk-item"><span class="afk-code">MUG</span><span class="afk-def">Mobiele Urgentie Groep – arts + verpleegkundige in ambulance</span></li>
+    <li class="afk-item"><span class="afk-code">O₂</span><span class="afk-def">Zuurstof</span></li>
+    <li class="afk-item"><span class="afk-code">OPQRST</span><span class="afk-def">Onset – Provocatie – Qualiteit – Region – Severity – Time (pijnanamnese)</span></li>
+    <li class="afk-item"><span class="afk-code">PEB</span><span class="afk-def">Plaats van het Eerste Bevel – commandopost bij MIP</span></li>
+    <li class="afk-item"><span class="afk-code">PIT</span><span class="afk-def">Paramedisch Interventie Team</span></li>
+    <li class="afk-item"><span class="afk-code">PIVO</span><span class="afk-def">Provinciaal Instituut Vorming en Opleiding</span></li>
+    <li class="afk-item"><span class="afk-code">PTSS</span><span class="afk-def">Post-Traumatisch StressSyndroom</span></li>
+    <li class="afk-item"><span class="afk-code">SAMPLE</span><span class="afk-def">Symptomen – Allergieën – Medicatie – Patient history – Laatste maaltijd – Events</span></li>
+    <li class="afk-item"><span class="afk-code">SIM</span><span class="afk-def">Medisch directeur ter plaatse bij MIP</span></li>
+    <li class="afk-item"><span class="afk-code">SpO₂</span><span class="afk-def">Saturatie perifere zuurstof (% O₂ in bloed, gemeten via saturatiemeter)</span></li>
+    <li class="afk-item"><span class="afk-code">START</span><span class="afk-def">Simple Triage And Rapid Treatment – triagesysteem bij massamedische incidenten</span></li>
+    <li class="afk-item"><span class="afk-code">TETRA</span><span class="afk-def">TErrestrial Trunked RAdio – digitaal radiocommunicatieprotocol (ASTRID)</span></li>
+    <li class="afk-item"><span class="afk-code">TLO</span><span class="afk-def">Totaal Lichaamoppervlak verbrand (% bij brandwonden – Wallace-regel)</span></li>
+    <li class="afk-item"><span class="afk-code">VF</span><span class="afk-def">Ventrikelfibrillatie – chaotisch hartritme, behandelbaar met AED</span></li>
+    <li class="afk-item"><span class="afk-code">VT</span><span class="afk-def">Ventriculaire Tachycardie – versneld ventrikelritme</span></li>
+    <li class="afk-item"><span class="afk-code">WAPA</span><span class="afk-def">Wakker – Aanspreekbaar – Pijnreactief – Areactief (bewustzijnsschaal)</span></li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════ ZOEKEN ════════════════════════════════════ -->
+<div class="tab-panel" id="panel-zoeken">
+  <div class="main-search-wrap">
+    <input type="text" id="globalSearch" placeholder="Zoek in alle pagina's..." oninput="doSearch(this.value)" autofocus>
+  </div>
+  <div id="searchResults" style="margin-top:16px">
+    <div class="search-empty">Typ een zoekterm om te zoeken in de samenvatting en staande orders</div>
+  </div>
+</div>
+
+<!-- MUG Tab -->
+<div class="tab-panel" id="panel-mug">
+  <div style="padding:16px 16px 0;">
+    <h2 style="font-size:1.1rem;font-weight:800;margin-bottom:4px;">🚁 MUG-indicaties</h2>
+    <p style="color:var(--muted);font-size:0.8rem;margin-bottom:16px;">Rechtstreeks uit PIVO-cursus H5 &amp; H12</p>
+  </div>
+
+  <!-- ALTIJD MUG -->
+  <div style="margin:0 16px 12px;">
+    <div style="background:var(--accent);color:#fff;border-radius:10px 10px 0 0;padding:10px 14px;font-weight:800;font-size:0.9rem;display:flex;align-items:center;gap:8px;">
+      🔴 ALTIJD MUG VRAGEN
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--accent);border-top:none;border-radius:0 0 10px 10px;padding:12px 14px;">
+      <div class="mug-item">Gedaald of verlies van bewustzijn (elke oorzaak)</div>
+      <div class="mug-item">Hartinfarct / pijn op de borst <span class="mug-note">— ook als patiënt er goed uitziet!</span></div>
+      <div class="mug-item">Hartstilstand / CPR gestart</div>
+      <div class="mug-item">Shock (elke soort)</div>
+      <div class="mug-item">Polytrauma / val van grote hoogte</div>
+      <div class="mug-item">Schedeltrauma</div>
+      <div class="mug-item">Verstikking · verdrinking · verhanging</div>
+      <div class="mug-item">Intoxicatie (CO, geneesmiddelen, drugs) met bewusteloosheid</div>
+      <div class="mug-item">Bevalling (imminent of onverwacht)</div>
+      <div class="mug-item">Longoedeem</div>
+      <div class="mug-item">Astma — zware aanval</div>
+      <div class="mug-item">Anafylaxie</div>
+      <div class="mug-item">Talrijke slachtoffers (triage vereist)</div>
+    </div>
+  </div>
+
+  <!-- CONDITIONEEL MUG -->
+  <div style="margin:0 16px 12px;">
+    <div style="background:var(--orange);color:#1a1a1a;border-radius:10px 10px 0 0;padding:10px 14px;font-weight:800;font-size:0.9rem;display:flex;align-items:center;gap:8px;">
+      🟠 MUG BIJ VERSLECHTERING / TWIJFEL
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--orange);border-top:none;border-radius:0 0 10px 10px;padding:12px 14px;">
+      <div class="mug-item">Hypoglycemie → bij gedaald bewustzijn <span class="mug-note">(suiker geven lukt niet)</span></div>
+      <div class="mug-item">Hyperglycemie → bij gedaald bewustzijn</div>
+      <div class="mug-item">Epilepsie → eerste aanval, aanval &gt; paar min, status epilepticus</div>
+      <div class="mug-item">CVA → bij gedaald bewustzijn</div>
+      <div class="mug-item">COPD/ademfalen → bij snel verslechterende ademhaling</div>
+      <div class="mug-item">Pneumothorax → bij shock of ernstige kortademigheid</div>
+      <div class="mug-item">Buikpijn → bij tekenen van shock</div>
+      <div class="mug-item">Syncope → bij aanhoudend gedaald bewustzijn</div>
+      <div class="mug-item">Intoxicatie (alcohol/drugs) → bij coma of vitale problemen</div>
+      <div class="mug-item">Elektrisch letsel / verdrinking → bij bewusteloosheid of ademhalingsmoeilijkheden</div>
+      <div class="mug-item">Giftig gas → bij bewusteloosheid of ademhalingsmoeilijkheden</div>
+      <div class="mug-item">Huisbrand → preventief voor hulpverleners</div>
+      <div class="mug-item">Overlijden → voor vaststelling door arts</div>
+    </div>
+  </div>
+
+  <!-- Geheugenregel -->
+  <div style="margin:0 16px 24px;background:var(--surface2);border-radius:10px;padding:14px 16px;">
+    <div style="font-size:0.8rem;color:var(--muted);margin-bottom:6px;font-weight:700;">📌 GEHEUGENREGEL (H12)</div>
+    <div style="font-size:0.88rem;line-height:1.6;">
+      "Elke omstandigheid waarbij <strong>levensgevaar wordt opgemerkt of voorzien</strong> verantwoordt een MUG-oproep."
+    </div>
+    <div style="margin-top:10px;font-size:0.8rem;color:var(--muted);">Criteria H12:</div>
+    <div style="font-size:0.82rem;margin-top:4px;color:var(--text);">
+      1. Toestand patiënt bedreigd?<br>
+      2. Uitgebreidheid probleem? (triage nodig)<br>
+      3. Arts vereist voor vaststelling / procedure?
+    </div>
+  </div>
+</div>
+
+<style>
+.mug-item {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.mug-item:last-child { border-bottom: none; }
+.mug-note { color: var(--muted); font-size: 0.78rem; }
+</style>
+
+<!-- Font size controls -->
+<div class="font-controls">
+  <button class="font-btn" onclick="changeFontSize(-1)" title="Kleiner">A−</button>
+  <button class="font-btn" onclick="changeFontSize(0)" title="Reset">A</button>
+  <button class="font-btn" onclick="changeFontSize(1)" title="Groter">A+</button>
+</div>
+
+<!-- Bottom navigation -->
+<nav class="bottom-nav">
+  <a href="tools.html" class="active">
+    <span class="icon">🛠️</span>Tools
+  </a>
+  <a href="staande-orders.html">
+    <span class="icon">🚨</span>Protocollen
+  </a>
+  <a href="PIVO-Cursus-Samenvatting.html">
+    <span class="icon">📚</span>Samenvatting
+  </a>
+</nav>
+
+<script>
+// ── SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
+// ── TABS ──
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+// ── CHECKLIST ──
+function toggleCheck(item) {
+  item.classList.toggle('done');
+  const circle = item.querySelector('.check-circle');
+  circle.textContent = item.classList.contains('done') ? '✓' : '☐';
+  updateProgress();
+}
+function updateProgress() {
+  const items = document.querySelectorAll('.checklist-item');
+  const done = document.querySelectorAll('.checklist-item.done').length;
+  document.getElementById('progressBar').style.width = (done / items.length * 100) + '%';
+}
+function resetChecklist() {
+  document.querySelectorAll('.checklist-item').forEach(i => {
+    i.classList.remove('done');
+    i.querySelector('.check-circle').textContent = '☐';
+    const input = i.querySelector('input');
+    if (input) input.value = '';
+  });
+  document.getElementById('progressBar').style.width = '0%';
+}
+function checkAll() {
+  document.querySelectorAll('.checklist-item').forEach(i => {
+    i.classList.add('done');
+    i.querySelector('.check-circle').textContent = '✓';
+  });
+  updateProgress();
+}
+
+// ── SAMPLE BILAN ──
+function generateBilan() {
+  const s = id => document.getElementById(id).value.trim();
+  const lines = [];
+  if (s('s_symptomen')) lines.push('<strong>Symptomen:</strong> ' + s('s_symptomen'));
+  if (s('s_allergies')) lines.push('<strong>Allergieën:</strong> ' + s('s_allergies'));
+  if (s('s_meds')) lines.push('<strong>Medicatie:</strong> ' + s('s_meds'));
+  if (s('s_history')) lines.push('<strong>Voorgeschiedenis:</strong> ' + s('s_history'));
+  if (s('s_last')) lines.push('<strong>Laatste maaltijd:</strong> ' + s('s_last'));
+  if (s('s_events')) lines.push('<strong>Omstandigheden:</strong> ' + s('s_events'));
+  if (s('o_onset')) lines.push('<strong>Begin:</strong> ' + s('o_onset'));
+  if (s('o_prov')) lines.push('<strong>Provocatie:</strong> ' + s('o_prov'));
+  if (s('o_qual')) lines.push('<strong>Kwaliteit:</strong> ' + s('o_qual'));
+  if (s('o_region')) lines.push('<strong>Locatie/uitstraling:</strong> ' + s('o_region'));
+  const score = document.getElementById('o_score').value;
+  if (score > 0) lines.push('<strong>Pijnscore:</strong> ' + score + '/10');
+  if (s('o_time')) lines.push('<strong>Tijdsverloop:</strong> ' + s('o_time'));
+
+  const preview = document.getElementById('bilanPreview');
+  if (lines.length === 0) { preview.innerHTML = 'Vul eerst enkele velden in.'; preview.classList.add('visible'); return; }
+  preview.innerHTML = '📋 <strong>Bilan samenvatting</strong><br><br>' + lines.join('<br>');
+  preview.classList.add('visible');
+}
+function clearSample() {
+  document.querySelectorAll('#sampleForm input, #sampleForm textarea').forEach(el => el.value = '');
+  document.getElementById('o_score').value = 0;
+  document.getElementById('scoreVal').textContent = '0';
+  document.getElementById('bilanPreview').classList.remove('visible');
+}
+
+// ── AFKORTINGEN FILTER ──
+function filterAfk(q) {
+  const term = q.toLowerCase();
+  document.querySelectorAll('.afk-item').forEach(li => {
+    const txt = li.textContent.toLowerCase();
+    li.classList.toggle('hidden', term.length > 0 && !txt.includes(term));
+  });
+}
+
+// ── GLOBAL SEARCH INDEX ──
+const INDEX = [
+  // Samenvatting
+  { title: 'Het Menselijk Lichaam', source: 'Samenvatting H1', url: 'PIVO-Cursus-Samenvatting.html#hfst1', text: 'zenuwstelsel hersenen ruggenmerg ademhalingsstelsel hart bloedvaten WAPA anatomie fysiologie alveoli cyanose' },
+  { title: 'De Eerste Minuten – ABC protocol', source: 'Samenvatting H2', url: 'PIVO-Cursus-Samenvatting.html#hfst2', text: 'veiligheid ABC WAPA eerste beoordeling aankomst melden SAMPLE anamnese allergieën medicatie' },
+  { title: 'CPR Cardiopulmonaire Reanimatie', source: 'Samenvatting H3', url: 'PIVO-Cursus-Samenvatting.html#hfst3', text: 'CPR reanimatie AED hartstilstand borstcompressies 30:2 beademen 100 120 per minuut 5-6 cm' },
+  { title: 'Shock – herkennen en behandelen', source: 'Samenvatting H3', url: 'PIVO-Cursus-Samenvatting.html#hfst3', text: 'shock bleek klam zwetend pols bloeddruk benen verheffen isothermische deken MUG oproepen' },
+  { title: 'De Gewonde Patiënt – trauma', source: 'Samenvatting H4', url: 'PIVO-Cursus-Samenvatting.html#hfst4', text: 'trauma wonden fracturen wervelbreuken schedeltrauma GCS immobilisatie halskraag KED blok-rol' },
+  { title: 'Glasgow Coma Scale GCS', source: 'Samenvatting H4', url: 'PIVO-Cursus-Samenvatting.html#hfst4', text: 'GCS glasgow coma scale bewustzijn ogen verbaal motorisch punten ernstig hersenletsel' },
+  { title: 'Pijn op de borst – ACS', source: 'Samenvatting H5', url: 'PIVO-Cursus-Samenvatting.html#hfst5', text: 'pijn borst ACS hartaanval drukkend uitstraling arm kaak zweten kortademig SpO2 94-98' },
+  { title: 'Beroerte CVA FAST-test', source: 'Samenvatting H5', url: 'PIVO-Cursus-Samenvatting.html#hfst5', text: 'CVA beroerte FAST face arm speech time gelaat arm spraak tijdstip glycemie trombolyse' },
+  { title: 'Diabetes Hypoglycemie', source: 'Samenvatting H5', url: 'PIVO-Cursus-Samenvatting.html#hfst5', text: 'diabetes hypoglycemie glycemie glucose suiker cola bewusteloosheid MUG niets per os' },
+  { title: 'Zwangerschap en bevalling – Malinas', source: 'Samenvatting H6', url: 'PIVO-Cursus-Samenvatting.html#hfst6', text: 'zwangerschap bevalling malinas score navelstrengprolaps stuitligging postpartum placenta' },
+  { title: 'Hulpverlening bij kinderen', source: 'Samenvatting H7', url: 'PIVO-Cursus-Samenvatting.html#hfst7', text: 'kinderen CPR zuigeling luchtwegobstructie heimlich ademhaling hartslag normen verschillen' },
+  { title: 'Brandwonden – Wallace-regel', source: 'Samenvatting H8', url: 'PIVO-Cursus-Samenvatting.html#hfst8', text: 'brandwonden TLO wallace regel graad koelen lauw water isothermische deken chemisch elektrisch' },
+  { title: 'Hyperthermie – hitteberoerte', source: 'Samenvatting H8', url: 'PIVO-Cursus-Samenvatting.html#hfst8', text: 'hyperthermie hitte beroerte koorts 40 graden droge huid afkoelen ijs oksels liezen' },
+  { title: 'Hypothermie – onderkoeling', source: 'Samenvatting H8', url: 'PIVO-Cursus-Samenvatting.html#hfst8', text: 'hypothermie onderkoeling 35 graden rillen dood warm CPR isothermische deken voorzichtig' },
+  { title: 'Verdrinking', source: 'Samenvatting H8', url: 'PIVO-Cursus-Samenvatting.html#hfst8', text: 'verdrinking horizontaal evacueren wervelletsel onderkoeling ziekenhuis asymptomatisch' },
+  { title: 'Noodplanning MIP START-triage', source: 'Samenvatting H11', url: 'PIVO-Cursus-Samenvatting.html#hfst11', text: 'MIP noodplan 5 disciplines START triage METTAG rood oranje groen zwart gewonden Dir-Med' },
+  { title: 'Organisatie DGH – MUG PIT HC 112', source: 'Samenvatting H12', url: 'PIVO-Cursus-Samenvatting.html#hfst12', text: 'DGH MUG PIT HC 112 ambulancier bevoegdheden ASTRID TETRA communicatie bilan statusmeldingen' },
+  // Staande Orders
+  { title: 'O01 – Nakende bevalling', source: 'Staande Order O1', url: 'staande-orders.html', text: 'bevalling nakend malinas score postpartum baby navelstreng placenta stuitligging prolaps' },
+  { title: 'O02 – Pijnstilling trauma', source: 'Staande Order O2', url: 'staande-orders.html', text: 'pijnstilling trauma fractuur amputatie knevel MUG analgesie immobilisatie' },
+  { title: 'O04 – Brandwonden', source: 'Staande Order O4', url: 'staande-orders.html', text: 'brandwonden TLO wallace koelen lauw water hypothermie isothermische deken afdekken MUG' },
+  { title: 'O06 – Convulsies', source: 'Staande Order O6', url: 'staande-orders.html', text: 'convulsies epilepsie aanval mond niets status epilepticus bewusteloos glycemie zijligging' },
+  { title: 'O10 – Hyperthermie', source: 'Staande Order O10', url: 'staande-orders.html', text: 'hyperthermie hitte koelen ijs oksels liezen bewusteloosheid agitatie tachycardie' },
+  { title: 'O11 – Hypoglycemie', source: 'Staande Order O11', url: 'staande-orders.html', text: 'hypoglycemie diabetes glycemie 60 suiker cola bewusteloosheid MUG niets per os meten' },
+  { title: 'O12 – Hypothermie', source: 'Staande Order O12', url: 'staande-orders.html', text: 'hypothermie 35 graden 28 CPR passieve opwarming isothermische deken horizontaal vervoer' },
+  { title: 'O13 – Bewustzijnsdaling', source: 'Staande Order O13', url: 'staande-orders.html', text: 'bewustzijn daling WAPA GCS zijligging luchtwegmanagement glycemie MUG oproepen' },
+  { title: 'O14 – Ademhalingsfalen', source: 'Staande Order O14', url: 'staande-orders.html', text: 'ademhaling falen 30 cyanose stridor O2 halfzittend tandprothese aerosoltherapie MUG' },
+  { title: 'O16 – CO-intoxicatie', source: 'Staande Order O16', url: 'staande-orders.html', text: 'CO koolmonoxide vergiftiging frisse lucht O2 100% bewusteloosheid ziekenhuis hyperbaar' },
+  { title: 'O17 – Verdrinking', source: 'Staande Order O17', url: 'staande-orders.html', text: 'verdrinking horizontaal evacueren CPR O2 hypothermie drogen isothermische deken ziekenhuis' },
+  { title: 'O18 – Zwaar ongeval MIP', source: 'Staande Order O18', url: 'staande-orders.html', text: 'zwaar ongeval MIP triage START METTAG Dir-Med disciplines perimeter PEB evacuatie' },
+  { title: 'O20 – CPR volwassene', source: 'Staande Order O20', url: 'staande-orders.html', text: 'CPR reanimatie 30:2 borstcompressies AED hartstilstand 100 120 5-6 cm beademing' },
+  { title: 'O24 – Pijn op de borst', source: 'Staande Order O24', url: 'staande-orders.html', text: 'pijn borst hartaanval ACS halfzittend O2 SpO2 bloeddruk MUG ritmestoornis AED' },
+  { title: 'O26 – Amputatie', source: 'Staande Order O26', url: 'staande-orders.html', text: 'amputatie afgerukt deel steriel bewaren ijs water knevel tijdstip ziekenhuis' },
+  { title: 'O28 – Ritmestoornissen', source: 'Staande Order O28', url: 'staande-orders.html', text: 'ritmestoornis VF VT bradycardie AED CPR tachycardie MUG hartstilstand' },
+  { title: 'O29 – CVA beroerte', source: 'Staande Order O29', url: 'staande-orders.html', text: 'CVA beroerte FAST gelaat arm spraak tijdstip trombolyse glycemie CT scan halfzittend MUG' },
+];
+
+function doSearch(q) {
+  const container = document.getElementById('searchResults');
+  if (!q || q.length < 2) {
+    container.innerHTML = '<div class="search-empty">Typ een zoekterm om te zoeken in de samenvatting en staande orders</div>';
+    return;
+  }
+  const terms = q.toLowerCase().split(' ').filter(t => t.length > 1);
+  const results = INDEX.filter(item => {
+    const haystack = (item.title + ' ' + item.text + ' ' + item.source).toLowerCase();
+    return terms.every(t => haystack.includes(t));
+  }).sort((a, b) => {
+    const aTitle = terms.filter(t => a.title.toLowerCase().includes(t)).length;
+    const bTitle = terms.filter(t => b.title.toLowerCase().includes(t)).length;
+    return bTitle - aTitle;
+  });
+
+  if (results.length === 0) {
+    container.innerHTML = '<div class="search-empty">Geen resultaten voor "' + q + '"</div>';
+    return;
+  }
+  container.innerHTML = results.map(r => {
+    let excerpt = r.text.replace(/</g,'&lt;');
+    terms.forEach(t => {
+      excerpt = excerpt.replace(new RegExp(t, 'gi'), m => '<mark>' + m + '</mark>');
+    });
+    let title = r.title;
+    terms.forEach(t => {
+      title = title.replace(new RegExp(t, 'gi'), m => '<mark>' + m + '</mark>');
+    });
+    return `<a class="search-result" href="${r.url}">
+      <div class="r-source">${r.source}</div>
+      <div class="r-title">${title}</div>
+      <div class="r-excerpt">${excerpt.split(' ').slice(0,18).join(' ')}…</div>
+    </a>`;
+  }).join('');
+}
+
+// ── FONT SIZE ──
+let fontSize = parseInt(localStorage.getItem('pivo_font') || '0');
+applyFont();
+function changeFontSize(delta) {
+  if (delta === 0) fontSize = 0;
+  else fontSize = Math.max(-2, Math.min(3, fontSize + delta));
+  localStorage.setItem('pivo_font', fontSize);
+  applyFont();
+}
+function applyFont() {
+  const base = 16 + fontSize * 1.5;
+  document.documentElement.style.fontSize = base + 'px';
+}
+</script>
+</body>
+</html>
