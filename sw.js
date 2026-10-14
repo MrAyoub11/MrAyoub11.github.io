@@ -1,9 +1,10 @@
-const CACHE = 'pivo-v2';
+const CACHE = 'pivo-v3';
 const ASSETS = [
   './',
   './tools.html',
   './staande-orders.html',
   './PIVO-Cursus-Samenvatting.html',
+  './planning.html',
   './manifest.json'
 ];
 

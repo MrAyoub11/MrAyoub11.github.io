@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIVO 2026 – Planning</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#e63946">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --border: #2e3350;
+  --accent: #e63946;
+  --day: #2dc653;
+  --night: #9b5de5;
+  --text: #e8eaf0;
+  --muted: #8891b0;
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; padding-bottom: 90px; }
+
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); display: flex; z-index: 200; padding-bottom: env(safe-area-inset-bottom); }
+.bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 4px 8px; text-decoration: none; color: var(--muted); font-size: 0.65rem; font-weight: 600; gap: 4px; }
+.bottom-nav a .icon { font-size: 1.3rem; }
+.bottom-nav a.active { color: var(--accent); }
+
+.page-header { background: linear-gradient(160deg, var(--surface) 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); padding: 32px 20px 24px; text-align: center; }
+.page-header h1 { font-size: 1.5rem; font-weight: 800; }
+.page-header h1 span { color: var(--accent); }
+.page-header p { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+
+.wrap { max-width: 600px; margin: 0 auto; padding: 16px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+textarea { width: 100%; min-height: 150px; background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 12px; font: inherit; font-size: 0.9rem; resize: vertical; }
+.btn { display: inline-block; border: none; border-radius: 10px; padding: 12px 16px; font: inherit; font-weight: 700; cursor: pointer; background: var(--accent); color: #fff; text-decoration: none; text-align: center; }
+.btn.full { width: 100%; margin-top: 10px; }
+.btn.ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.hint { color: var(--muted); font-size: 0.8rem; margin-top: 8px; }
+.err { color: var(--accent); font-size: 0.8rem; margin-top: 8px; }
+
+.legend { display: flex; gap: 14px; font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+.month-title { font-weight: 800; margin: 4px 0 10px; text-transform: capitalize; }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal .dow { text-align: center; font-size: 0.7rem; color: var(--muted); font-weight: 700; padding-bottom: 4px; }
+.cal .day { aspect-ratio: 1; border-radius: 8px; background: var(--surface2); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.85rem; color: var(--muted); border: 2px solid transparent; }
+.cal .day.D { background: var(--day); color: #0b2814; font-weight: 800; cursor: pointer; }
+.cal .day.N { background: var(--night); color: #fff; font-weight: 800; cursor: pointer; }
+.cal .day.sel { border-color: #fff; }
+.cal .day small { font-size: 0.6rem; font-weight: 700; }
+
+.shift-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.shift { display: flex; align-items: center; gap: 10px; background: var(--surface2); border-radius: 10px; padding: 10px; border-left: 4px solid var(--day); cursor: pointer; }
+.shift.N { border-left-color: var(--night); }
+.shift.sel { outline: 2px solid #fff; }
+.shift .info { flex: 1; font-size: 0.85rem; }
+.shift .info b { display: block; }
+.shift .info span { color: var(--muted); font-size: 0.75rem; }
+
+.sheet-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 300; align-items: flex-end; justify-content: center; }
+.sheet-bg.open { display: flex; }
+.sheet { background: var(--surface); border-radius: 18px 18px 0 0; width: 100%; max-width: 600px; padding: 20px 16px calc(20px + env(safe-area-inset-bottom)); }
+.sheet h3 { margin-bottom: 4px; }
+.sheet p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+.sheet .btn { width: 100%; margin-top: 8px; }
+.btn.google { background: #4285f4; }
+.btn.outlook { background: #0078d4; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>📅 <span>Planning</span></h1>
+  <p>Plak je planning en zet je shiften in je agenda</p>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <textarea id="input" placeholder="Hey je planning voor Oktober:&#10;3/10 D LO&#10;4/10 D LO&#10;18/10 N JP"></textarea>
+    <button class="btn full" onclick="parseAndRender()">Toon planning</button>
+    <div class="hint">D = dagshift 07:00–19:00 · N = nachtshift 19:00–07:00 (volgende dag)</div>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div id="result"></div>
+</main>
+
+<div class="sheet-bg" id="sheetBg" onclick="if(event.target===this)closeSheet()">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="tools.html"><span class="icon">🛠️</span>Tools</a>
+  <a href="staande-orders.html"><span class="icon">🚨</span>Protocollen</a>
+  <a href="PIVO-Cursus-Samenvatting.html"><span class="icon">📚</span>Samenvatting</a>
+  <a href="planning.html" class="active"><span class="icon">📅</span>Planning</a>
+</nav>
+
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+
+const MONTHS = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+const SHIFT = {
+  D: { label: 'Dagshift',   start: 7,  hours: 12 },
+  N: { label: 'Nachtshift', start: 19, hours: 12 }
+};
+let shifts = [];
+
+// Parse lines like "3/10 D LO" or "3/10/2026 N JP"
+function parsePlanning(text) {
+  const now = new Date();
+  const out = [];
+  const re = /(\d{1,2})\s*[\/\-.]\s*(\d{1,2})(?:\s*[\/\-.]\s*(\d{2,4}))?\s+([DN])\b\s*([^\n]*)/gi;
+  let m;
+  while ((m = re.exec(text))) {
+    const day = +m[1], month = +m[2] - 1;
+    let year = m[3] ? +m[3] : now.getFullYear();
+    if (year < 100) year += 2000;
+    // No year given and month lies well in the past → assume next year
+    if (!m[3] && month < now.getMonth() - 2) year++;
+    const type = m[4].toUpperCase();
+    const s = SHIFT[type];
+    const start = new Date(year, month, day, s.start, 0, 0);
+    if (start.getMonth() !== month) continue; // invalid date like 31/11
+    const end = new Date(start.getTime() + s.hours * 3600 * 1000);
+    out.push({ type, start, end, note: m[5].trim() });
+  }
+  return out.sort((a, b) => a.start - b.start);
+}
+
+function title(s) {
+  return `${SHIFT[s.type].label}${s.note ? ' ' + s.note : ''}`;
+}
+
+const pad = n => String(n).padStart(2, '0');
+const utcStamp = d => `${d.getUTCFullYear()}${pad(d.getUTCMonth()+1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
+const fmtTime = d => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const fmtDate = d => d.toLocaleDateString('nl-BE', { weekday: 'short', day: 'numeric', month: 'long' });
+
+function googleUrl(s) {
+  const p = new URLSearchParams({ action: 'TEMPLATE', text: title(s), dates: `${utcStamp(s.start)}/${utcStamp(s.end)}` });
+  return 'https://calendar.google.com/calendar/render?' + p;
+}
+function outlookUrl(s) {
+  const p = new URLSearchParams({ path: '/calendar/action/compose', rru: 'addevent', subject: title(s), startdt: s.start.toISOString(), enddt: s.end.toISOString() });
+  return 'https://outlook.live.com/calendar/0/deeplink/compose?' + p;
+}
+
+function buildIcs(list) {
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PIVO 2026//Planning//NL', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+  const stamp = utcStamp(new Date());
+  list.forEach(s => {
+    lines.push('BEGIN:VEVENT',
+      `UID:${utcStamp(s.start)}-${s.type}@pivo2026`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART:${utcStamp(s.start)}`,
+      `DTEND:${utcStamp(s.end)}`,
+      `SUMMARY:${title(s).replace(/[,;\\]/g, m => '\\' + m)}`,
+      'END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  return lines.join('\r\n');
+}
+function downloadIcs(list, name) {
+  const blob = new Blob([buildIcs(list)], { type: 'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+
+function parseAndRender() {
+  const text = document.getElementById('input').value;
+  try { localStorage.setItem('planningText', text); } catch (e) {}
+  shifts = parsePlanning(text);
+  document.getElementById('err').textContent = shifts.length ? '' : 'Geen shiften gevonden. Formaat: "3/10 D LO" of "18/10 N JP".';
+  render();
+}
+
+function render() {
+  const res = document.getElementById('result');
+  if (!shifts.length) { res.innerHTML = ''; return; }
+
+  // Group by month
+  const months = {};
+  shifts.forEach((s, i) => {
+    const key = `${s.start.getFullYear()}-${s.start.getMonth()}`;
+    (months[key] = months[key] || []).push(i);
+  });
+
+  let html = '<div class="card"><div class="legend"><span><i style="background:var(--day)"></i>Dag 07–19</span><span><i style="background:var(--night)"></i>Nacht 19–07</span></div>';
+  Object.keys(months).forEach(key => {
+    const [y, mo] = key.split('-').map(Number);
+    const byDay = {};
+    months[key].forEach(i => byDay[shifts[i].start.getDate()] = i);
+    const first = (new Date(y, mo, 1).getDay() + 6) % 7; // Monday first
+    const days = new Date(y, mo + 1, 0).getDate();
+    html += `<div class="month-title">${MONTHS[mo]} ${y}</div><div class="cal">`;
+    ['ma','di','wo','do','vr','za','zo'].forEach(d => html += `<div class="dow">${d}</div>`);
+    for (let i = 0; i < first; i++) html += '<div></div>';
+    for (let d = 1; d <= days; d++) {
+      const i = byDay[d];
+      html += i === undefined
+        ? `<div class="day">${d}</div>`
+        : `<div class="day ${shifts[i].type}" data-i="${i}" onclick="openSheet(${i})">${d}<small>${shifts[i].type}</small></div>`;
+    }
+    html += '</div><div style="height:14px"></div>';
+  });
+  html += '<div class="shift-list">';
+  shifts.forEach((s, i) => {
+    html += `<div class="shift ${s.type}" data-i="${i}" onclick="openSheet(${i})"><div class="info"><b>${fmtDate(s.start)}</b><span>${title(s)} · ${fmtTime(s.start)}–${fmtTime(s.end)}</span></div>›</div>`;
+  });
+  html += '</div></div>';
+
+  html += `<div class="card">
+    <b>Alles in één keer importeren (${shifts.length} shiften)</b>
+    <button class="btn full" onclick="downloadIcs(shifts,'planning.ics')">⬇️ Download alle shiften (.ics)</button>
+    <div class="hint">
+      📱 iPhone / Android: open het bestand → "Alles toevoegen".<br>
+      Google Agenda: <a href="https://calendar.google.com/calendar/r/settings/export" target="_blank" style="color:#8ab4f8">Instellingen → Importeren</a> en kies het bestand.<br>
+      Outlook/Hotmail: <a href="https://outlook.live.com/calendar/0/addcalendar" target="_blank" style="color:#8ab4f8">Agenda toevoegen → Uploaden uit bestand</a>.
+    </div>
+  </div>`;
+  res.innerHTML = html;
+}
+
+function openSheet(i) {
+  const s = shifts[i];
+  document.querySelectorAll('[data-i]').forEach(el => el.classList.toggle('sel', +el.dataset.i === i));
+  document.getElementById('sheet').innerHTML = `
+    <h3>${title(s)}</h3>
+    <p>${fmtDate(s.start)} ${fmtTime(s.start)} – ${fmtDate(s.end)} ${fmtTime(s.end)}</p>
+    <a class="btn google" href="${googleUrl(s)}" target="_blank" rel="noopener">Toevoegen aan Google Agenda</a>
+    <a class="btn outlook" href="${outlookUrl(s)}" target="_blank" rel="noopener">Toevoegen aan Outlook / Hotmail</a>
+    <button class="btn ghost" onclick="downloadIcs([shifts[${i}]],'shift.ics')">⬇️ .ics (Apple / andere)</button>
+    <button class="btn ghost" onclick="closeSheet()">Sluiten</button>`;
+  document.getElementById('sheetBg').classList.add('open');
+}
+function closeSheet() {
+  document.getElementById('sheetBg').classList.remove('open');
+  document.querySelectorAll('.sel').forEach(el => el.classList.remove('sel'));
+}
+
+try {
+  const saved = localStorage.getItem('planningText');
+  if (saved) { document.getElementById('input').value = saved; parseAndRender(); }
+} catch (e) {}
+</script>
+</body>
+</html>

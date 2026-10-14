@@ -13,6 +13,7 @@
   ],
   "shortcuts": [
     { "name": "Staande Orders", "url": "./staande-orders.html", "description": "Protocollen" },
-    { "name": "Samenvatting", "url": "./PIVO-Cursus-Samenvatting.html", "description": "Cursus samenvatting" }
+    { "name": "Samenvatting", "url": "./PIVO-Cursus-Samenvatting.html", "description": "Cursus samenvatting" },
+    { "name": "Planning", "url": "./planning.html", "description": "Shiften naar agenda" }
   ]
 }
