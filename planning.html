@@ -83,6 +83,7 @@ textarea { width: 100%; min-height: 150px; background: var(--surface2); color: v
   <div class="card">
     <textarea id="input" placeholder="Hey je planning voor Oktober:&#10;3/10 D LO&#10;4/10 D LO&#10;18/10 N JP"></textarea>
     <button class="btn full" onclick="parseAndRender()">Toon planning</button>
+    <button class="btn full ghost" id="pasteBtn" onclick="pasteClipboard()">📋 Plakken uit klembord</button>
     <div class="hint">D = dagshift 07:00–19:00 · N = nachtshift 19:00–07:00 (volgende dag)</div>
     <div class="err" id="err"></div>
   </div>
@@ -248,10 +249,27 @@ function closeSheet() {
   document.querySelectorAll('.sel').forEach(el => el.classList.remove('sel'));
 }
 
-try {
-  const saved = localStorage.getItem('planningText');
-  if (saved) { document.getElementById('input').value = saved; parseAndRender(); }
-} catch (e) {}
+async function pasteClipboard() {
+  try {
+    document.getElementById('input').value = await navigator.clipboard.readText();
+    parseAndRender();
+  } catch (e) {
+    document.getElementById('err').textContent = 'Plakken niet toegestaan – houd het tekstvak ingedrukt en kies "Plakken".';
+  }
+}
+if (!navigator.clipboard || !navigator.clipboard.readText) document.getElementById('pasteBtn').style.display = 'none';
+
+// Shared from WhatsApp (Web Share Target) → ?text=...
+const shared = new URLSearchParams(location.search);
+const sharedText = ['title', 'text', 'url'].map(k => shared.get(k)).filter(Boolean).join(String.fromCharCode(10));
+if (sharedText) {
+  try { localStorage.setItem('planningText', sharedText); } catch (e) {}
+  history.replaceState(null, '', location.pathname);
+}
+
+let saved = sharedText;
+try { saved = saved || localStorage.getItem('planningText'); } catch (e) {}
+if (saved) { document.getElementById('input').value = saved; parseAndRender(); }
 </script>
 </body>
 </html>

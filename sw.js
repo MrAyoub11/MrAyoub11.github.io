@@ -1,4 +1,4 @@
-const CACHE = 'pivo-v3';
+const CACHE = 'pivo-v4';
 const ASSETS = [
   './',
   './tools.html',
@@ -22,6 +22,6 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached))
+    caches.match(e.request, { ignoreSearch: e.request.mode === 'navigate' }).then(cached => cached || fetch(e.request).catch(() => cached))
   );
 });
