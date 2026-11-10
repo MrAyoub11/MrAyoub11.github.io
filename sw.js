@@ -1,4 +1,4 @@
-const CACHE = 'pivo-v4';
+const CACHE = 'pivo-v5';
 const ASSETS = [
   './',
   './tools.html',

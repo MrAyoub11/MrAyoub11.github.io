@@ -291,6 +291,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', syste
   <button class="tab-btn" onclick="switchTab('afk')">📖 Afkortingen</button>
   <button class="tab-btn" onclick="switchTab('zoeken')">🔍 Zoeken</button>
   <button class="tab-btn" onclick="switchTab('mug')">🚁 MUG</button>
+  <button class="tab-btn" onclick="switchTab('radio')">📻 Radio</button>
 </div>
 
 <!-- ════════════════════════════════════ TOOLS OVERVIEW ════════════════════════════════════ -->
@@ -328,6 +329,10 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', syste
     <div class="box" style="cursor:pointer" onclick="switchTab('houdingen')">
       <h3>🧍 Houdingen</h3>
       <p style="font-size:0.8rem;color:var(--muted)">Welke houding wanneer</p>
+    </div>
+    <div class="box blue" style="cursor:pointer" onclick="switchTab('radio')">
+      <h3>📻 Radiocodes</h3>
+      <p style="font-size:0.8rem;color:var(--muted)">Statusmeldingen 2–7</p>
     </div>
   </div>
 
@@ -833,6 +838,41 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', syste
 }
 .mug-item:last-child { border-bottom: none; }
 .mug-note { color: var(--muted); font-size: 0.78rem; }
+</style>
+
+
+<!-- ════════════════════════════════════ RADIO ════════════════════════════════════ -->
+<div class="tab-panel" id="panel-radio">
+  <div style="padding:16px 16px 0;">
+    <h2 style="font-size:1.1rem;font-weight:800;margin-bottom:4px;">📻 Radiocodes</h2>
+    <p style="color:var(--muted);font-size:0.8rem;margin-bottom:16px;">Statusmeldingen naar de dispatching</p>
+  </div>
+  <div style="margin:0 16px 12px;display:flex;flex-direction:column;gap:8px;">
+    <div class="radio-row"><span class="radio-code">2</span><span>Vertrek</span></div>
+    <div class="radio-row"><span class="radio-code">3</span><span>Ter plaatse</span></div>
+    <div class="radio-row unused"><span class="radio-code">4</span><span>Wordt niet gebruikt<span class="mug-note">Via radio, bv: "Ziekenwagen Borgerhout 1, patiënt naar Cadix"</span></span></div>
+    <div class="radio-row"><span class="radio-code">5</span><span>Aankomst ziekenhuis</span></div>
+    <div class="radio-row"><span class="radio-code">6</span><span>Vertrek radiofonisch</span></div>
+    <div class="radio-row"><span class="radio-code">7</span><span>Terug standplaats</span></div>
+  </div>
+
+  <div style="margin:0 16px 12px;">
+    <div class="box blue">
+      <h3>🗣️ Voorbeeldoproepen</h3>
+      <div class="mug-item"><b>Politie / MUG bijstand vragen</b><span class="radio-quote">"Ziekenwagen #plaats, vraag 112 Antwerpen over"</span></div>
+      <div class="mug-item"><b>Vertrek richting ziekenhuis</b><span class="radio-quote">"Ziekenwagen #plaats, met 1 patiënt richting #ziekenhuis"</span></div>
+      <div class="mug-item"><b>Bij overlijden</b><span class="radio-quote">"Ziekenwagen #plaats, code 20, radiofonisch terug naar standplaats"</span></div>
+    </div>
+  </div>
+</div>
+
+<style>
+.radio-row { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 0.95rem; font-weight: 600; }
+.radio-row .mug-note { display: block; font-weight: 400; margin-top: 3px; }
+.radio-code { flex-shrink: 0; width: 42px; height: 42px; border-radius: 10px; background: var(--accent2); color: #fff; font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.radio-row.unused { opacity: 0.6; }
+.radio-quote { display: block; margin-top: 4px; font-style: italic; color: #7ab8d4; }
+.radio-row.unused .radio-code { background: var(--surface2); color: var(--muted); }
 </style>
 
 <!-- Font size controls -->
